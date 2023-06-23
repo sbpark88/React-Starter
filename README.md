@@ -2,7 +2,7 @@
 
 # About The Project
 
-- 한 번에 끝내는 React 의 모든 것 초격차 패키지(패스트캠퍼스 온라이 강의)
+- 한 번에 끝내는 React 의 모든 것 초격차 패키지(패스트캠퍼스 온라인 강의)
 
 # System Configurations
 

@@ -1,7 +1,12 @@
 import './App.css';
+import MomentExample from './components/MomentExample';
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <MomentExample />
+    </>
+  );
 }
 
 export default App;

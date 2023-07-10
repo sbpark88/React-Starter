@@ -20,8 +20,7 @@ function MomentExample() {
   return (
     <section>
       <article>
-        <h1>Moment</h1>
-        <div>Immutable Check</div>
+        <h1>Immutable Check</h1>
         <div>
           momnetDate : {momentDate.format()}
           <br />

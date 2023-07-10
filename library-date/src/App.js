@@ -6,7 +6,7 @@ import MomentExample from './components/Momentjs/MomentExample';
 import DateFnsExample from './components/Dayjs/DateFnsExample';
 
 function App() {
-  const [currentLibrary, setCurrentLibrary] = useState('day');
+  const [currentLibrary, setCurrentLibrary] = useState('dateFns');
   const dateLibrary = {
     moment: <MomentExample />,
     day: <DayExample />,

@@ -1,6 +1,5 @@
 import './App.css';
 import EmotionExample from './components/Emotion/EmotionExample';
-import SassExample from './components/Sass/SassExample';
 import StyledComponentsExample from './components/StyledComponents/StyledComponentsExample';
 import React, { useState } from 'react';
 import StyledComponentsExample2 from './components/StyledComponents/StyledComponentsExample2';
@@ -34,9 +33,6 @@ function App() {
         <div>
           <button onClick={changeLibrary('emotion')}>Emotion.js</button>
         </div>
-        <div>
-          <button onClick={changeLibrary('sass')}>Sass</button>
-        </div>
       </div>
       <h1>현재 라이브러리 : {currentLibrary}</h1>
       <hr />
@@ -52,7 +48,6 @@ const styleLibrary = {
   styledComponents2: <StyledComponentsExample2 />,
   styledComponents3: <StyledComponentsExample3 />,
   emotion: <EmotionExample />,
-  sass: <SassExample />,
 };
 
 const divStyle = {};

@@ -1,25 +1,58 @@
-import logo from './logo.svg';
 import './App.css';
+import EmotionExample from './components/Emotion/EmotionExample';
+import SassExample from './components/Sass/SassExample';
+import StyledComponentsExample from './components/StyledComponents/StyledComponentsExample';
+import React, { useState } from 'react';
+import StyledComponentsExample2 from './components/StyledComponents/StyledComponentsExample2';
+import StyledComponentsExample3 from './components/StyledComponents/StyledComponentsExample3';
 
 function App() {
+  const [currentLibrary, setCurrentLibrary] = useState('styledComponents3');
+  const changeLibrary = (library) => () => setCurrentLibrary(library);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div
+        style={{
+          padding: '30px',
+          display: 'grid',
+          justifyContent: 'space-evenly',
+          gap: '30px',
+        }}
+      >
+        <div>
+          <button onClick={changeLibrary('styledComponents')}>
+            Styled-Components.js
+          </button>
+          <button onClick={changeLibrary('styledComponents2')}>
+            Styled-Components.js 2
+          </button>
+          <button onClick={changeLibrary('styledComponents3')}>
+            Styled-Components.js 3
+          </button>
+        </div>
+        <div>
+          <button onClick={changeLibrary('emotion')}>Emotion.js</button>
+        </div>
+        <div>
+          <button onClick={changeLibrary('sass')}>Sass</button>
+        </div>
+      </div>
+      <h1>현재 라이브러리 : {currentLibrary}</h1>
+      <hr />
+      {styleLibrary[currentLibrary]}
+    </>
   );
 }
 
 export default App;
+
+const styleLibrary = {
+  styledComponents: <StyledComponentsExample />,
+  styledComponents2: <StyledComponentsExample2 />,
+  styledComponents3: <StyledComponentsExample3 />,
+  emotion: <EmotionExample />,
+  sass: <SassExample />,
+};
+
+const divStyle = {};

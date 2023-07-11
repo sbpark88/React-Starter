@@ -7,7 +7,7 @@ import StyledComponentsExample2 from './components/StyledComponents/StyledCompon
 import StyledComponentsExample3 from './components/StyledComponents/StyledComponentsExample3';
 
 function App() {
-  const [currentLibrary, setCurrentLibrary] = useState('styledComponents3');
+  const [currentLibrary, setCurrentLibrary] = useState('emotion');
   const changeLibrary = (library) => () => setCurrentLibrary(library);
 
   return (

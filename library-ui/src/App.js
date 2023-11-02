@@ -5,9 +5,10 @@ import AntDesignExample1 from './components/antDesign/AntDesignExample1';
 import AntDesignExample2 from './components/antDesign/AntDesignExample2';
 import SemanticUiExample1 from './components/reactSemanticUi/SemanticUiExample1';
 import BootStrapExample1 from './components/bootStrap/BootStrapExample1';
+import MaterialUiExample1 from './components/materialUi/MaterialUiExample1';
 
 function App() {
-  const [currentLibrary, setCurrentLibrary] = useState('bootstrap1');
+  const [currentLibrary, setCurrentLibrary] = useState('materialUi1');
   const changeLibrary = (library) => () => setCurrentLibrary(library);
 
   return (
@@ -27,7 +28,8 @@ function App() {
           <button onClick={changeLibrary('semanticUi1')}>Semantic UI 1</button>
         </div>
         <div>
-          <button onClick={changeLibrary('bootstrap1')}>bootstrap 1</button>
+          <button onClick={changeLibrary('bootstrap1')}>Bootstrap 1</button>
+          <button onClick={changeLibrary('materialUi1')}>Material UI 1</button>
         </div>
       </div>
       <h1>현재 라이브러리 : {currentLibrary}</h1>
@@ -45,4 +47,5 @@ const dateLibrary = {
   antDesign2: <AntDesignExample2 />,
   semanticUi1: <SemanticUiExample1 />,
   bootstrap1: <BootStrapExample1 />,
+  materialUi1: <MaterialUiExample1 />,
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { atom, selector, useRecoilValue } from "recoil";
 import axios from "axios";
+import Calendar from "./components/Calendar";
 
 const todosUrl = "https://jsonplaceholder.typicode.com/todos/";
 
@@ -37,6 +38,7 @@ function App() {
     <div>
       {data.title}
       {data.userId}
+      <Calendar />
     </div>
   );
 }

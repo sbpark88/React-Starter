@@ -2,14 +2,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import styled from "@emotion/styled/macro";
 import { isSameDay } from "../utils/CalendarUtils";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-
-const COLOR = {
-  WHITE: "#F8F7FA",
-  LIGHT_GRAY: "#C9C8CC",
-  PURPLE: "#7047EB",
-  LIGHT_BLACK: "#313133",
-  BLACK: "#28272A",
-};
+import COLORS from "../constants/Colors";
 
 const Header = styled.div`
   width: 100%;
@@ -24,7 +17,7 @@ const Title = styled.h1`
   font-size: 24px;
   font-weight: normal;
   text-align: center;
-  color: ${COLOR.WHITE};
+  color: ${COLORS.WHITE};
 `;
 
 const ArrowButton = styled.button<{ pos: "left" | "right" }>`
@@ -34,7 +27,7 @@ const ArrowButton = styled.button<{ pos: "left" | "right" }>`
   background-color: transparent;
   font-size: 18px;
   cursor: pointer;
-  color: ${COLOR.WHITE};
+  color: ${COLORS.WHITE};
 `;
 
 const ButtonContainer = styled.div`
@@ -57,7 +50,7 @@ const TableHeader = styled.thead`
     > th {
       padding-block: 12px;
       font-weight: normal;
-      color: ${COLOR.WHITE};
+      color: ${COLORS.WHITE};
     }
   }
 `;
@@ -66,15 +59,15 @@ const TableBody = styled.tbody``;
 
 const TableData = styled.td`
   text-align: center;
-  color: ${COLOR.LIGHT_GRAY};
+  color: ${COLORS.LIGHT_GRAY};
   padding: 8px;
   position: relative;
 `;
 
 const DisplayDate = styled.div<{ isToday?: boolean; isSelected?: boolean }>`
-  color: ${({ isToday }) => isToday && COLOR.WHITE};
+  color: ${({ isToday }) => isToday && COLORS.WHITE};
   background-color: ${({ isToday, isSelected }) =>
-    isSelected ? COLOR.PURPLE : isToday ? COLOR.LIGHT_BLACK : ""};
+    isSelected ? COLORS.PURPLE : isToday ? COLORS.LIGHT_BLACK : ""};
   width: 36px;
   height: 36px;
   display: flex;
@@ -95,7 +88,7 @@ const Base = styled.div`
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  background-color: ${COLOR.BLACK};
+  background-color: ${COLORS.BLACK};
   ${Header} + ${Table} {
     margin-top: 36px;
   }

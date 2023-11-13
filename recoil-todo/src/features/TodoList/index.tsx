@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "@emotion/styled/macro";
 import COLORS from "../../constants/Colors";
-
-interface Todo {
-  id: string;
-  content: string;
-  done: boolean;
-  date: Date;
-}
+import {
+  OptionalTodo,
+  selectedDateState,
+  selectedTodoState,
+  Todo,
+} from "./atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { todoStatisticsModalOpenState } from "../TodoStatisticsModal/atom";
 
 const TodoItem = styled.li<{ done?: boolean; selected?: boolean }>`
   max-width: 100px;
@@ -54,15 +55,42 @@ interface Props {
 const MAX_TODO_DISPLAY_LENGTH = 3;
 
 const TodoList: React.FC<Props> = ({ todos }) => {
+  const selectedTodo = useRecoilValue<OptionalTodo>(selectedTodoState);
+
+  const setSelectedTodo = useSetRecoilState<OptionalTodo>(selectedTodoState);
+  const setTodoStatisticsModalOpen = useSetRecoilState<boolean>(
+    todoStatisticsModalOpenState,
+  );
+
+  const handleClick = (e: React.SyntheticEvent<HTMLLIElement>, todo: Todo) => {
+    e.stopPropagation();
+    setSelectedTodo(
+      selectedTodo?.id === todo.id && selectedTodo.date === todo.date
+        ? null
+        : todo,
+    );
+  };
+
+  const handleTodoStatisticsModalOpen = (
+    e: React.SyntheticEvent<HTMLLIElement>,
+  ) => {
+    e.stopPropagation();
+    setTodoStatisticsModalOpen(true);
+  };
+
   return (
     <Base>
       {todos.slice(0, MAX_TODO_DISPLAY_LENGTH).map((todo, index) => (
-        <TodoItem key={todo.id} done={todo.done}>
+        <TodoItem
+          key={todo.id}
+          done={todo.done}
+          onClick={(e) => handleClick(e, todo)}
+        >
           {todo.content}
         </TodoItem>
       ))}
       {todos.length > MAX_TODO_DISPLAY_LENGTH && (
-        <EtcItem>{`그 외 ${
+        <EtcItem onClick={handleTodoStatisticsModalOpen}>{`그 외 ${
           todos.length - MAX_TODO_DISPLAY_LENGTH
         }개...`}</EtcItem>
       )}

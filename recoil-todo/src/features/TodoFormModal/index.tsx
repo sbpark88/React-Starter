@@ -1,7 +1,12 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styled from "@emotion/styled/macro";
 import COLORS from "../../constants/Colors";
 import Modal from "../../components/Modal";
+import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil";
+import { v4 as uuidv4 } from "uuid";
+import { selectedDateState, Todo, todoListState } from "../TodoList/atom";
+import { todoFormModalOpenState } from "./atom";
+import { getSimpleDateFormat } from "../../utils/CalendarUtils";
 
 const Date = styled.small`
   display: block;
@@ -39,18 +44,60 @@ const Container = styled.div`
 `;
 
 const TodoFormModal: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const [todo, setTodo] = useState<string>("");
+  const [isOpen, setIsOpen] = useRecoilState<boolean>(todoFormModalOpenState);
+
+  const selectedDate = useRecoilValue(selectedDateState);
+  const todoList = useRecoilValue(todoListState);
+
+  const reset = useCallback(() => {
+    setTodo("");
+    inputRef.current?.focus();
+  }, []);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
-  }, []);
+  }, [setIsOpen]);
+
+  const addTodo = useRecoilCallback(
+    ({ snapshot, set }) =>
+      () => {
+        const todoList = snapshot.getLoadable(todoListState).getValue();
+        const newTodo: Todo = {
+          id: uuidv4(),
+          content: todo,
+          done: false,
+          date: selectedDate,
+        };
+        set(todoListState, [...todoList, newTodo]);
+      },
+    [todo, selectedDate, todoList],
+  );
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== "Enter") return;
+    addTodo();
+    reset();
+    handleClose();
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodo(e.target.value);
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
       <Container>
         <Card>
-          <Date>2023-11-11</Date>
-          <InputTodo placeholder="새로운 이벤트" />
+          <Date>{getSimpleDateFormat(selectedDate)}</Date>
+          <InputTodo
+            ref={inputRef}
+            placeholder="새로운 이벤트"
+            onKeyDown={handleKeyPress}
+            onChange={handleChange}
+          />
         </Card>
       </Container>
     </Modal>

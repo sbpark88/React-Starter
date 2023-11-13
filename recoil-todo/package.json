@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@types/react-transition-group": "^4.4.9",
+    "@types/uuid": "^9.0.7",
     "prettier": "^3.0.3"
   }
 }

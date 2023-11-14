@@ -1,13 +1,8 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "@emotion/styled/macro";
 import COLORS from "../../constants/Colors";
-import {
-  OptionalTodo,
-  selectedDateState,
-  selectedTodoState,
-  Todo,
-} from "./atom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { OptionalTodo, selectedTodoState, Todo, todoListState } from "./atom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { todoStatisticsModalOpenState } from "../TodoStatisticsModal/atom";
 
 const TodoItem = styled.li<{ done?: boolean; selected?: boolean }>`
@@ -55,6 +50,7 @@ interface Props {
 const MAX_TODO_DISPLAY_LENGTH = 3;
 
 const TodoList: React.FC<Props> = ({ todos }) => {
+  const [todoList, setTodoList] = useRecoilState<Todo[]>(todoListState);
   const selectedTodo = useRecoilValue<OptionalTodo>(selectedTodoState);
 
   const setSelectedTodo = useSetRecoilState<OptionalTodo>(selectedTodoState);
@@ -68,6 +64,23 @@ const TodoList: React.FC<Props> = ({ todos }) => {
       selectedTodo?.id === todo.id && selectedTodo.date === todo.date
         ? null
         : todo,
+    );
+  };
+
+  const makeTodoDone = (e: React.SyntheticEvent<HTMLLIElement>, todo: Todo) => {
+    e.stopPropagation();
+
+    setTodoList((currVal) =>
+      currVal.map((value) => {
+        if (value.id === todo.id) {
+          const newValue = {
+            ...value,
+            done: true,
+          };
+          return newValue;
+        }
+        return value;
+      }),
     );
   };
 
@@ -85,6 +98,7 @@ const TodoList: React.FC<Props> = ({ todos }) => {
           key={todo.id}
           done={todo.done}
           onClick={(e) => handleClick(e, todo)}
+          onDoubleClick={(e) => makeTodoDone(e, todo)}
         >
           {todo.content}
         </TodoItem>

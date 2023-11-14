@@ -2,6 +2,8 @@ import React from "react";
 import { atom, selector, useRecoilValue } from "recoil";
 import axios from "axios";
 import Calendar from "./components/Calendar";
+import TodoFormModal from "./features/TodoFormModal";
+import TodoStatisticsModal from "./features/TodoStatisticsModal";
 
 const todosUrl = "https://jsonplaceholder.typicode.com/todos/";
 
@@ -36,9 +38,9 @@ function App() {
 
   return (
     <div>
-      {data.title}
-      {data.userId}
       <Calendar />
+      <TodoFormModal />
+      <TodoStatisticsModal />
     </div>
   );
 }

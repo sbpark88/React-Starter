@@ -1,8 +1,13 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled/macro";
 import COLORS from "../../constants/Colors";
 import Modal from "../../components/Modal";
-import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil";
+import {
+  useRecoilCallback,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 import { v4 as uuidv4 } from "uuid";
 import { selectedDateState, Todo, todoListState } from "../TodoList/atom";
 import { todoFormModalOpenState } from "./atom";
@@ -52,19 +57,20 @@ const TodoFormModal: React.FC = () => {
   const selectedDate = useRecoilValue(selectedDateState);
   const todoList = useRecoilValue(todoListState);
 
-  const reset = useCallback(() => {
+  const reset = () => {
     setTodo("");
     inputRef.current?.focus();
-  }, []);
+  };
 
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
     setIsOpen(false);
-  }, [setIsOpen]);
+  };
 
   const addTodo = useRecoilCallback(
     ({ snapshot, set }) =>
       () => {
         const todoList = snapshot.getLoadable(todoListState).getValue();
+        console.log(todoList);
         const newTodo: Todo = {
           id: uuidv4(),
           content: todo,
@@ -83,9 +89,9 @@ const TodoFormModal: React.FC = () => {
     handleClose();
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setTodo(e.target.value);
-  };
+  }, []);
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>

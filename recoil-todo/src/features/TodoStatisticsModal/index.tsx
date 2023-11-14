@@ -77,7 +77,7 @@ const Container = styled.div`
   padding: 8px;
 `;
 
-const TodoStaticsModal: React.FC = () => {
+const TodoStatisticsModal: React.FC = () => {
   const [todoList, setTodoList] = useRecoilState<Todo[]>(todoListState);
   const [isOpen, setIsOpen] = useRecoilState<boolean>(
     todoStatisticsModalOpenState,
@@ -91,16 +91,14 @@ const TodoStaticsModal: React.FC = () => {
 
   const statistics = useRecoilValue(todoStatisticsState(selectedDate));
 
-  // const handleClose = useCallback(() => {
-  //   setIsOpen(false);
-  // }, [setIsOpen]);
-
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
     setIsOpen(false);
-  }, [setIsOpen]);
+  };
 
-  const removeTodo = (id: string) =>
+  const removeTodo = (id: string) => {
+    debugger;
     setTodoList(todoList.filter((todo) => todo.id !== id));
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
@@ -131,4 +129,4 @@ const TodoStaticsModal: React.FC = () => {
   );
 };
 
-export default TodoStaticsModal;
+export default TodoStatisticsModal;

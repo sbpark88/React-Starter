@@ -1,8 +1,10 @@
 import React, { useCallback, useMemo, useState } from "react";
 import styled from "@emotion/styled/macro";
-import { isSameDay } from "../utils/CalendarUtils";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import COLORS from "../constants/Colors";
+import { useRecoilState } from "recoil";
+import { selectedDateState } from "../features/TodoList/atom";
+import CalendarDay from "./CalendarDay";
 
 const Header = styled.div`
   width: 100%;
@@ -57,27 +59,11 @@ const TableHeader = styled.thead`
 
 const TableBody = styled.tbody``;
 
-const TableData = styled.td`
+export const TableData = styled.td`
   text-align: center;
   color: ${COLORS.LIGHT_GRAY};
   padding: 8px;
   position: relative;
-`;
-
-const DisplayDate = styled.div<{ isToday?: boolean; isSelected?: boolean }>`
-  color: ${({ isToday }) => isToday && COLORS.WHITE};
-  background-color: ${({ isToday, isSelected }) =>
-    isSelected ? COLORS.PURPLE : isToday ? COLORS.LIGHT_BLACK : ""};
-  width: 36px;
-  height: 36px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  align-self: flex-end;
-  top: 8px;
-  right: 8px;
-  cursor: pointer;
 `;
 
 const Base = styled.div`
@@ -99,7 +85,8 @@ const DAYS = ["일", "월", "화", "수", "목", "금", "토"];
 const MONTHS = (monthIndex: number): string => `${(monthIndex + 1) % 12}월`;
 
 const Calendar: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] =
+    useRecoilState<Date>(selectedDateState);
 
   const { year, month, firstDay, lastDay } = useMemo(() => {
     const year = selectedDate.getFullYear();
@@ -113,9 +100,12 @@ const Calendar: React.FC = () => {
     };
   }, [selectedDate]);
 
-  const selectDate = useCallback((date: Date) => {
-    setSelectedDate(date);
-  }, []);
+  const selectDate = useCallback(
+    (date: Date) => {
+      setSelectedDate(date);
+    },
+    [setSelectedDate],
+  );
 
   const pad = useCallback(() => {
     return Array.from({ length: firstDay.getDay() }, (_, padding) => (
@@ -126,20 +116,10 @@ const Calendar: React.FC = () => {
   const range = useCallback(() => {
     return Array.from({ length: lastDay.getDate() }, (_, date) => {
       const thisDay = new Date(year, month, date + 1);
-      const today = new Date();
 
-      return (
-        <TableData key={date} onClick={() => selectDate(thisDay)}>
-          <DisplayDate
-            isToday={isSameDay(today, thisDay)}
-            isSelected={isSameDay(selectedDate, thisDay)}
-          >
-            {new Date(year, month, date + 1).getDate()}
-          </DisplayDate>
-        </TableData>
-      );
+      return <CalendarDay key={date} date={thisDay} />;
     });
-  }, [year, month, lastDay, selectDate, selectedDate]);
+  }, [year, month, lastDay]);
 
   const render = () => {
     const items = [...pad(), ...range()];

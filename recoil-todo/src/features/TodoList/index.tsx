@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled/macro";
 import COLORS from "../../constants/Colors";
 import { OptionalTodo, selectedTodoState, Todo, todoListState } from "./atom";
@@ -71,16 +71,9 @@ const TodoList: React.FC<Props> = ({ todos }) => {
     e.stopPropagation();
 
     setTodoList((currVal) =>
-      currVal.map((value) => {
-        if (value.id === todo.id) {
-          const newValue = {
-            ...value,
-            done: true,
-          };
-          return newValue;
-        }
-        return value;
-      }),
+      currVal.map((value) =>
+        value.id === todo.id ? { ...value, done: true } : value,
+      ),
     );
   };
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styled from "@emotion/styled/macro";
 import COLORS from "../../constants/Colors";
 import Modal from "../../components/Modal";
@@ -13,7 +13,7 @@ import { selectedDateState, Todo, todoListState } from "../TodoList/atom";
 import { todoFormModalOpenState } from "./atom";
 import { getSimpleDateFormat } from "../../utils/CalendarUtils";
 
-const Date = styled.small`
+const DateLabel = styled.small`
   display: block;
   color: ${COLORS.LIGHT_GRAY};
 `;
@@ -37,7 +37,7 @@ const Card = styled.div`
   box-sizing: border-box;
   background-color: ${COLORS.DARK_BLACK};
 
-  ${Date} + ${InputTodo} {
+  ${DateLabel} + ${InputTodo} {
     margin-top: 24px;
   }
 `;
@@ -55,7 +55,7 @@ const TodoFormModal: React.FC = () => {
   const [isOpen, setIsOpen] = useRecoilState<boolean>(todoFormModalOpenState);
 
   const selectedDate = useRecoilValue(selectedDateState);
-  const todoList = useRecoilValue(todoListState);
+  const setTodoList = useSetRecoilState(todoListState);
 
   const reset = () => {
     setTodo("");
@@ -70,17 +70,27 @@ const TodoFormModal: React.FC = () => {
     ({ snapshot, set }) =>
       () => {
         const todoList = snapshot.getLoadable(todoListState).getValue();
-        console.log(todoList);
         const newTodo: Todo = {
           id: uuidv4(),
           content: todo,
           done: false,
-          date: selectedDate,
+          date: new Date(selectedDate),
         };
         set(todoListState, [...todoList, newTodo]);
       },
-    [todo, selectedDate, todoList],
+    [todo, selectedDate],
   );
+  // const addTodo = () =/*> {
+  //   setTodoList((currVal) => [
+  //     ...currVal,
+  //     {
+  //       id: uuidv4(),
+  //       content: todo,
+  //       done: false,
+  //       date: new Date(selectedDate),
+  //     },
+  //   ]);
+  // };*/
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== "Enter") return;
@@ -97,7 +107,7 @@ const TodoFormModal: React.FC = () => {
     <Modal isOpen={isOpen} onClose={handleClose}>
       <Container>
         <Card>
-          <Date>{getSimpleDateFormat(selectedDate)}</Date>
+          <DateLabel>{getSimpleDateFormat(selectedDate)}</DateLabel>
           <InputTodo
             ref={inputRef}
             placeholder="새로운 이벤트"

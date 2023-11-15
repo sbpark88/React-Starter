@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import styled from "@emotion/styled/macro";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import COLORS from "../constants/Colors";

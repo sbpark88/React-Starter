@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled/macro";
-import { PokemonAPI } from "../constants/APIs";
+import { PokeImageAPI } from "../apis/APIs";
 import Colors from "../constants/Colors";
+import usePokemonQuery from "../hooks/usePokemonQuery";
+import { formatSharpNumber } from "../utils/format";
+import { ListResponse } from "../types";
 
 const Image = styled.img``;
 
@@ -43,22 +46,42 @@ const List = styled.ul`
   padding: 0;
 `;
 
+const Loading = styled.img``;
+
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 180px);
+`;
+
 const Base = styled.div`
   margin-top: 24px;
 `;
 
-const getImageUrl = (index: number): string => PokemonAPI.get(index);
+const getImageUrl = (index: number): string => PokeImageAPI.get(index);
 
 const PokemonList: React.FC = () => {
+  const { isLoading, isError, data } = usePokemonQuery<ListResponse>();
+
   return (
     <Base>
-      <List>
-        <ListItem>
-          <Image src={getImageUrl(1)} />
-          <Name>고라파덕</Name>
-          <Index>#001</Index>
-        </ListItem>
-      </List>
+      {isLoading || isError ? (
+        <LoadingWrapper>
+          <Loading src="/assets/loading.gif" alt="loading" />
+        </LoadingWrapper>
+      ) : (
+        <List>
+          {data?.data.results?.map((pokemon, index) => (
+            <ListItem key={pokemon.name}>
+              <Image src={getImageUrl(index + 1)} alt={pokemon.name} />
+              <Name>{pokemon.name}</Name>
+              <Index>{formatSharpNumber(index + 1)}</Index>
+            </ListItem>
+          ))}
+        </List>
+      )}
     </Base>
   );
 };

@@ -1,5 +1,6 @@
 const Colors = {
   TRANSPARENT_BLACK: "rgba(0, 0, 0, 0.21)",
+  PURE_WHITE: "#FFF",
   GRAY: "#374151",
   LIGHT_GRAY: "#6B7280",
   DARK_WHITE: "#D1D5DB",

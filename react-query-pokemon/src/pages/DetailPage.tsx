@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
-import Tabs, { TBA_TYPE } from "../components/Tabs";
+import Tabs, { TBA_TYPE } from "../components/tabs/Tabs";
 
 type Params = {
   id: string;

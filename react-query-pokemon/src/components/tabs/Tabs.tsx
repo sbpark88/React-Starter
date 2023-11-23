@@ -1,8 +1,16 @@
 import React from "react";
 import styled from "@emotion/styled/macro";
-import { Color } from "../types";
-import { colorNameToHexColor } from "../utils/hexColor";
-import Colors from "../constants/Colors";
+import { Color } from "../../types";
+import { colorNameToHexColor } from "../../utils/hexColor";
+import Colors from "../../constants/Colors";
+
+export const Title = styled.h4<{ color: string }>`
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: ${({ color }) => color};
+`;
 
 const TABS_ARRAY = ["about", "stats", "evolution"] as const;
 export type TBA_TYPE = (typeof TABS_ARRAY)[number];

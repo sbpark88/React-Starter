@@ -41,7 +41,7 @@ const Container = styled.div`
 const IndexPage: React.FC = () => {
   return (
     <Container>
-      <Title>Pokemon Dictionary</Title>
+      <Title>Pokémon Dictionary</Title>
       <Description>Lorem ipsum dolor sit amet.</Description>
       <PokemonList />
       <ImageWrapper>

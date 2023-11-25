@@ -60,7 +60,7 @@ const Base = styled.div`
   margin-top: 24px;
 `;
 
-const getImageUrl = (index: number): string => PokeImageAPI.get(index);
+const getImageUrl = (index: number): string => PokeImageAPI.getImage(index);
 
 const PokemonList: React.FC = () => {
   const { isLoading, isError, data } = usePokemonQuery<ListResponse>();

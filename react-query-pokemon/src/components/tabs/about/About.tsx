@@ -97,9 +97,9 @@ const Info: React.FC<Params> = ({ label, color, value }) => {
 type Props = {
   isLoading: boolean;
   color?: Color;
-  growthRage?: string;
+  growthRate?: string;
   flavorText?: string;
-  genderRate?: string;
+  genderRate?: number;
   isLegendary?: boolean;
   isMythical?: boolean;
   types?: Array<Type>;
@@ -112,7 +112,7 @@ type Props = {
 const About: React.FC<Props> = ({
   isLoading,
   color,
-  growthRage,
+  growthRate,
   flavorText,
   genderRate,
   isLegendary,
@@ -128,39 +128,49 @@ const About: React.FC<Props> = ({
   return (
     <Base>
       <FlavorText>{flavorText}</FlavorText>
-      <Loading />
-      <TypeList>
-        {types?.map(({ type }, index) => (
-          <TypeWrapper key={index} color={colorNameToHexColor(color?.name)}>
-            <TypeImage src={`/assets/${type.name}.svg`} />
-            <TypeLabel>{type.name.toUpperCase()}</TypeLabel>
-          </TypeWrapper>
-        ))}
-      </TypeList>
-      <InfoContainerWrapper>
-        <Title color={colorNameToHexColor(color?.name)}>Pokédex Data</Title>
-        <InfoContainer>
-          <Info
-            label="Height"
-            color={color}
-            value={height === undefined ? undefined : `${height / 10}m`}
-          />
-          <Info
-            label="Weight"
-            color={color}
-            value={weight === undefined ? undefined : `${weight / 10}kg`}
-          />
-          <Info label="Gender" color={color} value={genderRate} />
-          <Info label="Growth Rate" color={color} value={growthRage} />
-          <Info
-            label="Base Exp"
-            color={color}
-            value={baseExp === undefined ? undefined : `${baseExp}`}
-          />
-          <Info label="Rarity" color={color} value={rarity} />
-        </InfoContainer>
-      </InfoContainerWrapper>
-      {abilities && <Abilities abilities={abilities} color={color} />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <TypeList>
+            {types?.map(({ type }, index) => (
+              <TypeWrapper key={index} color={colorNameToHexColor(color?.name)}>
+                <TypeImage src={`/assets/${type.name}.svg`} />
+                <TypeLabel>{type.name.toUpperCase()}</TypeLabel>
+              </TypeWrapper>
+            ))}
+          </TypeList>
+
+          <InfoContainerWrapper>
+            <Title color={colorNameToHexColor(color?.name)}>Pokédex Data</Title>
+            <InfoContainer>
+              <Info
+                label="Height"
+                color={color}
+                value={height === undefined ? undefined : `${height / 10}m`}
+              />
+              <Info
+                label="Weight"
+                color={color}
+                value={weight === undefined ? undefined : `${weight / 10}kg`}
+              />
+              <Info
+                label="Gender"
+                color={color}
+                value={`${genderRate === -1 ? "Unknown" : "Male / Female"}`}
+              />
+              <Info label="Growth Rate" color={color} value={growthRate} />
+              <Info
+                label="Base Exp"
+                color={color}
+                value={baseExp === undefined ? undefined : `${baseExp}`}
+              />
+              <Info label="Rarity" color={color} value={rarity} />
+            </InfoContainer>
+          </InfoContainerWrapper>
+          {abilities && <Abilities abilities={abilities} color={color} />}
+        </>
+      )}
     </Base>
   );
 };

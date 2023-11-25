@@ -1,9 +1,10 @@
 const Colors = {
   TRANSPARENT_BLACK: "rgba(0, 0, 0, 0.21)",
   PURE_WHITE: "#FFF",
+  MIDDLE_WHITE: "#e5e7eb",
+  DARK_WHITE: "#D1D5DB",
   GRAY: "#374151",
   LIGHT_GRAY: "#6B7280",
-  DARK_WHITE: "#D1D5DB",
   DARK_CORAL: "#d34f49",
 };
 

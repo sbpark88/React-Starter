@@ -39,12 +39,14 @@ type Props = {
   url?: string;
 };
 const Evolution: React.FC<Props> = ({ isLoading, id, color, url }) => {
+  const from = { name: "", url: "" };
+  const to = { name: "", url: "" };
   return (
     <Base>
       <Title color={colorNameToHexColor(color?.name)}>Evolution</Title>
       <Loading />
       <List>
-        <EvolutionStage level={0} color={color} from={} to={} />
+        <EvolutionStage level={0} color={color} from={from} to={to} />
       </List>
       <EmptyWrapper>
         <Empty color={colorNameToHexColor(color?.name)}>

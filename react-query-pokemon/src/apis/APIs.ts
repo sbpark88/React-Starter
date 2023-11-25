@@ -1,24 +1,28 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import { PokemonResponse, SpeciesResponse } from "../types";
 
 export const PokeImageAPI = {
   url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon",
-  get: function (pokemonIndex: number): string {
+  getImage: function (pokemonIndex: number): string {
     return `${this.url}/${pokemonIndex}.png`;
   },
-};
-
-export const PokeThumbnailImageAPI = {
-  url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world",
-  get: function (pokemonIndex: number): string {
-    return `${this.url}/${pokemonIndex}.svg`;
+  getThumbnail: function (pokemonIndex: number): string {
+    return `${this.url}/other/dream-world/${pokemonIndex}.svg`;
   },
 };
 
 export const PokeInfoAPI = {
-  url: "https://pokeapi.co/api/v2/pokemon",
-  get: function (pokemonId?: string) {
-    return axios.get(`${this.url}/${pokemonId ?? ""}`, {
+  url: "https://pokeapi.co/api/v2",
+  getInfo: function (
+    pokemonId: string = "",
+  ): Promise<AxiosResponse<PokemonResponse, Error>> {
+    return axios.get(`${this.url}/pokemon/${pokemonId}`, {
       params: { limit: 151 },
     });
+  },
+  getSpecies: function (
+    pokemonId: string = "",
+  ): Promise<AxiosResponse<SpeciesResponse, Error>> {
+    return axios.get(`${this.url}/pokemon-species/${pokemonId}`);
   },
 };

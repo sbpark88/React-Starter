@@ -3,7 +3,7 @@ import styled from "@emotion/styled/macro";
 import { Color, Type } from "../types";
 import { colorNameToHexColor, pokemonTypeToHexColor } from "../utils/hexColor";
 import { formatSharpNumber } from "../utils/format";
-import { PokeThumbnailImageAPI } from "../apis/APIs";
+import { PokeImageAPI } from "../apis/APIs";
 import Colors from "../constants/Colors";
 
 const Image = styled.img`
@@ -95,7 +95,7 @@ const PokemonInfo: React.FC<Props> = ({ id, name, types, color }) => {
   return (
     <Base color={colorNameToHexColor(color?.name)}>
       <ImageWrapper>
-        <Image src="/assets/poketball.svg" />
+        <Image src="/assets/pocketball.svg" />
       </ImageWrapper>
       <InfoWrapper>
         <Name>{name}</Name>
@@ -110,7 +110,7 @@ const PokemonInfo: React.FC<Props> = ({ id, name, types, color }) => {
       </TypeList>
       <ThumbnailImageWrapper>
         <ThumbnailImage
-          src={PokeThumbnailImageAPI.get(Number(id))}
+          src={PokeImageAPI.getThumbnail(Number(id))}
           alt="thumbnail"
         />
       </ThumbnailImageWrapper>

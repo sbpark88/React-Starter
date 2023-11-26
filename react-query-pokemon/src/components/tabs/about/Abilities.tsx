@@ -1,9 +1,14 @@
 import React from "react";
-import { Ability, Color } from "../../../types";
+import { Ability, AbilityResponse, Color } from "../../../types";
 import styled from "@emotion/styled/macro";
 import { Title } from "../Tabs";
 import { colorNameToHexColor } from "../../../utils/hexColor";
 import Colors from "../../../constants/Colors";
+import useAbilities, {
+  UseAbilitiesResponse,
+} from "../../../hooks/useAbilities";
+import { UseQueryResult } from "react-query";
+import { AxiosResponse } from "axios/index";
 
 const Label = styled.span`
   flex: 1 0 30%;
@@ -43,15 +48,24 @@ type Props = {
   color?: Color;
 };
 
-const Abilities: React.FC<Props> = ({ color }) => {
+const Abilities: React.FC<Props> = ({ color, abilities }) => {
+  const queryResult: UseAbilitiesResponse = useAbilities(abilities);
+
   return (
     <Base>
       <Title color={colorNameToHexColor(color?.name)}>Abilities</Title>
       <List>
-        <ListItem>
-          <Label>Label</Label>
-          <Description>Description</Description>
-        </ListItem>
+        {queryResult.map(
+          ({ data: axiosResponse }, index) =>
+            axiosResponse && (
+              <ListItem key={index}>
+                <Label>{axiosResponse.data.name}</Label>
+                <Description>
+                  {axiosResponse.data.effect_entries[0].effect}
+                </Description>
+              </ListItem>
+            ),
+        )}
       </List>
     </Base>
   );

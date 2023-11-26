@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { PokemonResponse, SpeciesResponse } from "../types";
+import { AbilityResponse, PokemonResponse, SpeciesResponse } from "../types";
 
 export const PokeImageAPI = {
   url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon",
@@ -24,5 +24,12 @@ export const PokeInfoAPI = {
     pokemonId: string = "",
   ): Promise<AxiosResponse<SpeciesResponse, Error>> {
     return axios.get(`${this.url}/pokemon-species/${pokemonId}`);
+  },
+  getAbilities: function (
+    url: string,
+  ): Promise<AxiosResponse<AbilityResponse, Error>> {
+    const endpoint = "https://pokeapi.co/api/v2/ability/";
+    const abilityUrl = url.startsWith(endpoint) ? url : endpoint + url;
+    return axios.get(abilityUrl);
   },
 };

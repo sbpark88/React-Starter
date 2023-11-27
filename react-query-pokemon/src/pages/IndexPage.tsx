@@ -42,7 +42,10 @@ const IndexPage: React.FC = () => {
   return (
     <Container>
       <Title>Pokémon Dictionary</Title>
-      <Description>Lorem ipsum dolor sit amet.</Description>
+      <Description>
+        The Pokémon Dictionary contains detailed stats for every creature from
+        the Pokémon games.
+      </Description>
       <PokemonList />
       <ImageWrapper>
         <Image src="/assets/pocketball.svg" />

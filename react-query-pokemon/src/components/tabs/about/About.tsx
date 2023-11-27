@@ -142,7 +142,7 @@ const About: React.FC<Props> = ({
           </TypeList>
 
           <InfoContainerWrapper>
-            <Title color={colorNameToHexColor(color?.name)}>Pokédex Data</Title>
+            <Title color={colorNameToHexColor(color?.name)}>Pokémon Data</Title>
             <InfoContainer>
               <Info
                 label="Height"

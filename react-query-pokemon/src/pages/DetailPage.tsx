@@ -1,10 +1,14 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import Tabs, { TBA_TYPE } from "../components/tabs/Tabs";
-import useSpeciesQuery from "../hooks/useSpeciesQuery";
-import { PokemonResponse, SpeciesResponse } from "../types";
+import useSpeciesQuery, {
+  UseSpeciesQueryResponse,
+} from "../hooks/useSpeciesQuery";
+import { SpeciesResponse } from "../types";
 import PokemonInfo from "../components/PokemonInfo";
-import usePokemonQuery from "../hooks/usePokemonQuery";
+import usePokemonQuery, {
+  UsePokemonQueryResponse,
+} from "../hooks/usePokemonQuery";
 import About from "../components/tabs/about/About";
 import Stats from "../components/tabs/stats/Stats";
 import Evolution from "../components/tabs/evolution/Evolution";
@@ -32,7 +36,7 @@ const DetailPage: React.FC = () => {
     isLoading: isPokemonLoading,
     isError: isPokemonError,
     data: pokemonInfo,
-  } = usePokemonQuery<PokemonResponse>(id);
+  } = usePokemonQuery(id) as UsePokemonQueryResponse;
 
   const { name, types, height, weight, abilities, baseExp, stats } = useMemo(
     () => ({
@@ -52,7 +56,7 @@ const DetailPage: React.FC = () => {
     isLoading: isSpeciesLoading,
     isError: isSpeciesError,
     data: pokemonSpecies,
-  } = useSpeciesQuery<SpeciesResponse>(id);
+  }: UseSpeciesQueryResponse = useSpeciesQuery(id);
 
   const {
     color,
@@ -117,11 +121,7 @@ const DetailPage: React.FC = () => {
     <Container>
       {id && <PokemonInfo id={id} name={name} types={types} color={color} />}
       <TabsWrapper>
-        <Tabs
-          tab={selectedTab}
-          onClick={onTabsClick}
-          color={{ name: "red", url: "" }}
-        />
+        <Tabs tab={selectedTab} onClick={onTabsClick} color={color} />
       </TabsWrapper>
       {DisplayTab[selectedTab]}
     </Container>

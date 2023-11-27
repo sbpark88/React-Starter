@@ -1,5 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { AbilityResponse, PokemonResponse, SpeciesResponse } from "../types";
+import {
+  AbilityResponse,
+  EvolutionChainResponse,
+  PokemonResponse,
+  SpeciesResponse,
+} from "../types";
 
 export const PokeImageAPI = {
   url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon",
@@ -31,5 +36,12 @@ export const PokeInfoAPI = {
     const endpoint = "https://pokeapi.co/api/v2/ability/";
     const abilityUrl = url.startsWith(endpoint) ? url : endpoint + url;
     return axios.get(abilityUrl);
+  },
+  getEvolutionChain: function (
+    url: string,
+  ): Promise<AxiosResponse<EvolutionChainResponse, Error>> {
+    const endpoint = "https://pokeapi.co/api/v2/evolution-chain/";
+    const evolutionChainUrl = url.startsWith(endpoint) ? url : endpoint + url;
+    return axios.get(evolutionChainUrl);
   },
 };

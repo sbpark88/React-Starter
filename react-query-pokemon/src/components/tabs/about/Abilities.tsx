@@ -4,9 +4,9 @@ import styled from "@emotion/styled/macro";
 import { Title } from "../Tabs";
 import { colorNameToHexColor } from "../../../utils/hexColor";
 import Colors from "../../../constants/Colors";
-import useAbilities, {
-  UseAbilitiesResponse,
-} from "../../../hooks/useAbilities";
+import useAbilitiesQueries, {
+  UseAbilitiesQueriesResponse,
+} from "../../../hooks/useAbilitiesQueries";
 import { UseQueryResult } from "react-query";
 import { AxiosResponse } from "axios/index";
 
@@ -49,7 +49,8 @@ type Props = {
 };
 
 const Abilities: React.FC<Props> = ({ color, abilities }) => {
-  const queryResult: UseAbilitiesResponse = useAbilities(abilities);
+  const queryResult: UseAbilitiesQueriesResponse =
+    useAbilitiesQueries(abilities);
 
   return (
     <Base>

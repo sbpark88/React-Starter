@@ -4,6 +4,7 @@ import styled from "@emotion/styled/macro";
 import Colors from "../../../constants/Colors";
 import { Title } from "../Tabs";
 import { colorNameToHexColor } from "../../../utils/hexColor";
+import Loading from "../../common/Loading";
 
 const Gauge = styled.div<{ percentage: number; color: string }>`
   background-color: ${({ color }) => color};
@@ -62,22 +63,26 @@ const Stats: React.FC<Props> = ({ isLoading, stats, color }) => {
   return (
     <Base>
       <Title color={colorNameToHexColor(color?.name)}>Base Stats</Title>
-      <List>
-        {stats?.map(({ stat, base_stat }, index) => (
-          <ListItem key={index}>
-            <Name>
-              {stat.name === "hp" ? stat.name.toUpperCase() : stat.name}
-            </Name>
-            <Amount>{base_stat}</Amount>
-            <GaugeWrapper>
-              <Gauge
-                percentage={(base_stat / 255) * 100}
-                color={colorNameToHexColor(color?.name)}
-              />
-            </GaugeWrapper>
-          </ListItem>
-        ))}
-      </List>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <List>
+          {stats?.map(({ stat, base_stat }, index) => (
+            <ListItem key={index}>
+              <Name>
+                {stat.name === "hp" ? stat.name.toUpperCase() : stat.name}
+              </Name>
+              <Amount>{base_stat}</Amount>
+              <GaugeWrapper>
+                <Gauge
+                  percentage={(base_stat / 255) * 100}
+                  color={colorNameToHexColor(color?.name)}
+                />
+              </GaugeWrapper>
+            </ListItem>
+          ))}
+        </List>
+      )}
     </Base>
   );
 };

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "@emotion/styled/macro";
 import { PokeImageAPI } from "../apis/APIs";
 import Colors from "../constants/Colors";
-import usePokemonQuery from "../hooks/usePokemonQuery";
+import usePokemonQuery, {
+  UsePokemonQueryListResponse,
+} from "../hooks/usePokemonQuery";
 import { formatSharpNumber } from "../utils/format";
-import { ListResponse } from "../types";
+import { useNavigate } from "react-router-dom";
 
 const Image = styled.img``;
 
@@ -63,7 +65,18 @@ const Base = styled.div`
 const getImageUrl = (index: number): string => PokeImageAPI.getImage(index);
 
 const PokemonList: React.FC = () => {
-  const { isLoading, isError, data } = usePokemonQuery<ListResponse>();
+  const { isLoading, isError, data } =
+    usePokemonQuery() as UsePokemonQueryListResponse;
+
+  const navigate = useNavigate();
+
+  const goDetailPage = useCallback(
+    (event: React.MouseEvent<HTMLLIElement>, id: number) => {
+      event.stopPropagation();
+      navigate(String(id));
+    },
+    [navigate],
+  );
 
   return (
     <Base>
@@ -74,7 +87,10 @@ const PokemonList: React.FC = () => {
       ) : (
         <List>
           {data?.data.results?.map((pokemon, index) => (
-            <ListItem key={pokemon.name}>
+            <ListItem
+              key={pokemon.name}
+              onClick={(event) => goDetailPage(event, index + 1)}
+            >
               <Image src={getImageUrl(index + 1)} alt={pokemon.name} />
               <Name>{pokemon.name}</Name>
               <Index>{formatSharpNumber(index + 1)}</Index>

@@ -3,16 +3,19 @@ import { useQueries, UseQueryResult } from "react-query";
 import { AxiosResponse } from "axios";
 import { PokeInfoAPI } from "../apis/APIs";
 
-export type UseAbilitiesResponse = Array<
-  UseQueryResult<AxiosResponse<AbilityResponse>, Error>
+export type UseAbilitiesQueriesResponse = Array<
+  UseQueryResult<AxiosResponse<AbilityResponse, Error>, Error>
 >;
-const useAbilities = (abilities: Array<Ability>): UseAbilitiesResponse => {
+
+const useAbilitiesQueries = (
+  abilities: Array<Ability>,
+): UseAbilitiesQueriesResponse => {
   const queries = abilities.map(({ ability }, index) => ({
     queryKey: ["ability", index],
     queryFn: () => PokeInfoAPI.getAbilities(ability.url),
   }));
 
-  return useQueries(queries) as UseAbilitiesResponse;
+  return useQueries(queries) as UseAbilitiesQueriesResponse;
 };
 
-export default useAbilities;
+export default useAbilitiesQueries;

@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Color } from "../../../types";
 import styled from "@emotion/styled/macro";
 import Colors from "../../../constants/Colors";
 import { colorNameToHexColor } from "../../../utils/hexColor";
+import {
+  usePokemonQueries,
+  UsePokemonQueriesResponse,
+  UsePokemonQueryResponse,
+} from "../../../hooks/usePokemonQuery";
 
 const Image = styled.img`
   width: 100%;
@@ -35,9 +40,7 @@ const Base = styled.li`
   align-items: center;
 `;
 
-type Props = {
-  level: number;
-  color?: Color;
+export type EvolutionChain = {
   from: {
     name: string;
     url: string;
@@ -46,13 +49,29 @@ type Props = {
     name: string;
     url: string;
   };
+  level: number;
 };
 
-const EvolutionStage: React.FC<Props> = ({ level, color }) => {
+type Props = EvolutionChain & {
+  color?: Color;
+};
+
+const EvolutionStage: React.FC<Props> = ({ from, to, level, color }) => {
+  const [previous, next]: UsePokemonQueriesResponse = usePokemonQueries([
+    from.name,
+    to.name,
+  ]);
+
+  const getArtwork = useCallback(
+    (response: UsePokemonQueryResponse) =>
+      response.data?.data.sprites.other["official-artwork"].front_default,
+    [],
+  );
+
   return (
     <Base>
       <ImageWrapper>
-        <Image src={""} />
+        <Image src={getArtwork(previous)} />
       </ImageWrapper>
       <DividerWrapper>
         {level && (
@@ -63,7 +82,7 @@ const EvolutionStage: React.FC<Props> = ({ level, color }) => {
         <Divider />
       </DividerWrapper>
       <ImageWrapper>
-        <Image src={""} />
+        <Image src={getArtwork(next)} />
       </ImageWrapper>
     </Base>
   );

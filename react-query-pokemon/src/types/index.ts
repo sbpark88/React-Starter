@@ -115,7 +115,7 @@ export type EvolutionTo = {
     url: string;
   };
 };
-export type ListResponse = {
+export type PokemonListResponse = {
   count: number;
   results: Array<SimplePokemonInfo>;
 };

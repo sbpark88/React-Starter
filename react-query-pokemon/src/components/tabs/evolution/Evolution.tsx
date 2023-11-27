@@ -1,10 +1,13 @@
-import React from "react";
-import { Color } from "../../../types";
+import React, { useEffect, useState } from "react";
+import { Chain, Color } from "../../../types";
 import styled from "@emotion/styled/macro";
 import { Title } from "../Tabs";
 import { colorNameToHexColor } from "../../../utils/hexColor";
 import Loading from "../../common/Loading";
-import EvolutionStage from "./EvolutionStage";
+import EvolutionStage, { EvolutionChain } from "./EvolutionStage";
+import useEvolutionChainQuery, {
+  UseEvolutionChainQueryResponse,
+} from "../../../hooks/useEvolutionChainQuery";
 
 const List = styled.ul`
   list-style: none;
@@ -39,20 +42,63 @@ type Props = {
   url?: string;
 };
 const Evolution: React.FC<Props> = ({ isLoading, id, color, url }) => {
-  const from = { name: "", url: "" };
-  const to = { name: "", url: "" };
+  const [evolutionChain, setEvolutionChain] = useState<Array<EvolutionChain>>(
+    [],
+  );
+
+  const {
+    isLoading: isEvolutionLoading,
+    isSuccess,
+    isError,
+    data,
+  }: UseEvolutionChainQueryResponse = useEvolutionChainQuery(url);
+
+  useEffect(() => {
+    const makeEvolutionChain = (chain: Chain) => {
+      if (chain.evolves_to.length) {
+        const [evolvesTo] = chain.evolves_to;
+
+        const nextEvolutionchain = {
+          from: chain.species,
+          to: evolvesTo.species,
+          level: evolvesTo.evolution_details[0].min_level,
+        };
+
+        setEvolutionChain((prevState) => [...prevState, nextEvolutionchain]);
+
+        makeEvolutionChain(chain.evolves_to[0]);
+      }
+    };
+
+    isSuccess && data && makeEvolutionChain(data.data.chain);
+
+    return () => setEvolutionChain([]);
+  }, [isSuccess, data]);
+
   return (
     <Base>
       <Title color={colorNameToHexColor(color?.name)}>Evolution</Title>
-      <Loading />
-      <List>
-        <EvolutionStage level={0} color={color} from={from} to={to} />
-      </List>
-      <EmptyWrapper>
-        <Empty color={colorNameToHexColor(color?.name)}>
-          This Pokémon does not evolve.
-        </Empty>
-      </EmptyWrapper>
+      {isLoading || isEvolutionLoading ? (
+        <Loading />
+      ) : evolutionChain.length ? (
+        <List>
+          {evolutionChain.map(({ from, to, level }, index) => (
+            <EvolutionStage
+              key={index}
+              color={color}
+              from={from}
+              to={to}
+              level={level}
+            />
+          ))}
+        </List>
+      ) : (
+        <EmptyWrapper>
+          <Empty color={colorNameToHexColor(color?.name)}>
+            This Pokémon does not evolve.
+          </Empty>
+        </EmptyWrapper>
+      )}
     </Base>
   );
 };

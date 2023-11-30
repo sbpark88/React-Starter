@@ -5,7 +5,7 @@ import WatchComponent from "./pages/WatchComponent";
 import ValidateComponent from "./pages/ValidateComponent";
 import ErrorHandlingComponent from "./pages/ErrorHandlingComponent";
 import ControllerComponent from "./pages/ControllerComponent";
-import { findAllByDisplayValue } from "@testing-library/react";
+import "./style.scss";
 
 const PAGES = {
   index: "/",

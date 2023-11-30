@@ -14,8 +14,6 @@ const ErrorHandlingComponent: React.FC = () => {
   } = useForm<FormInputs>();
   const [result, setResult] = useState<string>("");
 
-  console.log(errors);
-
   const onFormSubmit = useCallback((form: FormInputs) => {
     setResult(JSON.stringify(form));
   }, []);
@@ -61,15 +59,3 @@ function FormError({ message }: ErrorProps) {
     </span>
   );
 }
-
-// const FormError: React.FC<ErrorProps> = ({ message }) => {
-//   return (
-//     <span
-//       style={{
-//         color: "red",
-//       }}
-//     >
-//       {message}
-//     </span>
-//   );
-// };

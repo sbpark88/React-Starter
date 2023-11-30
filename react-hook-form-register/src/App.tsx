@@ -6,6 +6,10 @@ import ValidateComponent from "./pages/ValidateComponent";
 import ErrorHandlingComponent from "./pages/ErrorHandlingComponent";
 import ControllerComponent from "./pages/ControllerComponent";
 import "./style.scss";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
 const PAGES = {
   index: "/",

@@ -10,6 +10,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import FormContext from "./pages/FormContext";
 
 const PAGES = {
   index: "/",
@@ -18,6 +19,7 @@ const PAGES = {
   validate: "/validate",
   errorHandling: "/error-handling",
   controller: "/controller",
+  formContext: "/form-context",
 };
 
 function App() {
@@ -36,6 +38,7 @@ function App() {
           element={<ErrorHandlingComponent />}
         />
         <Route path={PAGES.controller} element={<ControllerComponent />} />
+        <Route path={PAGES.formContext} element={<FormContext />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
@@ -59,10 +62,13 @@ function Layout() {
             <Link to={PAGES.validate}>validate</Link>
           </li>
           <li>
-            <Link to={PAGES.errorHandling}>errorHandling</Link>
+            <Link to={PAGES.errorHandling}>error handling</Link>
           </li>
           <li>
             <Link to={PAGES.controller}>controller</Link>
+          </li>
+          <li>
+            <Link to={PAGES.formContext}>form context</Link>
           </li>
         </ul>
       </nav>

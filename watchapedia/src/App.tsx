@@ -18,11 +18,18 @@ const newRouter = (path: string, element: React.ReactElement): object => ({
   errorElement: <ErrorPage />,
 });
 
+export const PAGES = {
+  index: "/",
+  tv: "/tv",
+  tvId: "/tv/:id",
+  movieId: "/movie/:id",
+};
+
 const router = createBrowserRouter([
-  newRouter("/", <MainPage />),
-  newRouter("/tv", <TvPage />),
-  newRouter("/tv/:id", <TvDetail />),
-  newRouter("/movie/:id", <MovieDetail />),
+  newRouter(PAGES.index, <MainPage />),
+  newRouter(PAGES.tv, <TvPage />),
+  newRouter(PAGES.tvId, <TvDetail />),
+  newRouter(PAGES.movieId, <MovieDetail />),
 ]);
 
 /*

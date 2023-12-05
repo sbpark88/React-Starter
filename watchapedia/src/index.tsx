@@ -5,6 +5,9 @@ import reportWebVitals from "./reportWebVitals";
 import { DevSupport } from "@react-buddy/ide-toolbox";
 import { ComponentPreviews, useInitial } from "./dev";
 import "./index.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -15,7 +18,9 @@ root.render(
       ComponentPreviews={ComponentPreviews}
       useInitialHook={useInitial}
     >
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </DevSupport>
   </React.StrictMode>,
 );

@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactNode } from "react";
 import Slider, { Settings } from "react-slick";
 import styled from "@emotion/styled/macro";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";

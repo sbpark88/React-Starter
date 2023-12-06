@@ -41,18 +41,6 @@ const Info = styled.div`
   width: 100%;
 `;
 
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 4px;
-`;
-
-const ImageWrapper = styled.div`
-  width: 100%;
-  height: 300px;
-`;
-
 const Base = styled.div`
   display: flex;
   flex-direction: column;
@@ -83,9 +71,11 @@ const Card: React.FC<Props> = ({
   return (
     <StyledLink to={linkUrl}>
       <Base>
-        <ImageWrapper>
-          <Image src={posterPath} alt={`${title} 의 포스터`} />
-        </ImageWrapper>
+        {isAvailablePoster(posterPath) ? (
+          <Poster posterPath={posterPath} title={title} />
+        ) : (
+          <Placeholder />
+        )}
         <Info>
           <Title>{title}</Title>
           <Keyword>{getCardYear(year)}</Keyword>
@@ -110,6 +100,58 @@ const Card: React.FC<Props> = ({
 };
 
 export default Card;
+
+const TMDB_ICON =
+  "https://www.themoviedb.org/assets/2/apple-touch-icon-cfba7699efe7a742de25c28e08c38525f19381d31087c69e89d6bcb8e3c0ddfa.png";
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+`;
+
+const ImageWrapper = styled.div<{ defaultImage?: boolean }>`
+  width: 100%;
+  height: 300px;
+`;
+
+const Placeholder: React.FC = () => (
+  <ImageWrapper
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+    }}
+  >
+    <Image
+      src={TMDB_ICON}
+      alt="TMDB 아이콘"
+      style={{
+        objectFit: "contain",
+        minWidth: "100px",
+        minHeight: "100px",
+        width: "150px",
+        height: "150px",
+        marginBottom: "10px",
+      }}
+    />
+    <span>이미지 등록 전 입니다.</span>
+  </ImageWrapper>
+);
+
+const Poster: React.FC<{ posterPath: string; title: string }> = ({
+  posterPath,
+  title,
+}) => (
+  <ImageWrapper>
+    <Image src={posterPath} alt={`${title} 의 포스터`} />
+  </ImageWrapper>
+);
+
+const isAvailablePoster = (posterPath: string): boolean =>
+  posterPath.split("/").pop() !== "null";
 
 export const CardContainer: React.FC<{
   title: string;

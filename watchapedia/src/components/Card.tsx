@@ -1,9 +1,8 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styled from "@emotion/styled/macro";
 import { Link } from "react-router-dom";
 import { COLORS } from "../constants/COLORS";
 import { FONT_SIZE, FONT_WEIGHT } from "../constants/FONTS";
-import { ImWarning } from "react-icons/im";
 import { AiFillStar } from "react-icons/ai";
 import { getMovieRate } from "../utils/StringAndNumberUtils";
 
@@ -105,3 +104,22 @@ const Card: React.FC<Props> = ({
 };
 
 export default Card;
+
+export const CardContainer: React.FC<{
+  title: string;
+  children: ReactNode;
+}> = ({ title, children }) => (
+  <div style={{ marginBottom: "42px" }}>
+    <h4
+      style={{
+        fontSize: FONT_SIZE.SLIDER_TITLE,
+        fontWeight: FONT_WEIGHT.BOLD,
+        lineHeight: "30px",
+        padding: "12px 0 14px",
+      }}
+    >
+      {title}
+    </h4>
+    {children}
+  </div>
+);

@@ -4,6 +4,7 @@ import { PAGES } from "../App";
 import { COLORS } from "../constants/COLORS";
 import { FONT_SIZE, FONT_WEIGHT } from "../constants/FONTS";
 import { AiOutlineSearch } from "react-icons/ai";
+import { HEADER_HEIGHT } from "../constants/STYLES";
 
 const SignUp = styled.button`
   min-width: 72px;
@@ -121,7 +122,7 @@ const Base = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  height: 62px;
+  height: ${HEADER_HEIGHT};
   margin: 0 auto;
   background-color: ${COLORS.WHITE_0};
   box-shadow: ${COLORS.OPAQUE_BLACK_008} 0 1px 0 0;

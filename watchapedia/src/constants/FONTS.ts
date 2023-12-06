@@ -4,6 +4,7 @@ export const FONT_SIZE = {
   DEFAULT: "15px",
   ITEMS: "16px",
   LARGE: "19px",
+  SLIDER_TITLE: "22px",
   LOGO: "24px",
 };
 

@@ -6,7 +6,7 @@ export const upcomingMovie = () => axiosInstance.get("/movie/upcoming");
 
 export const nowPlayingMovie = () => axiosInstance.get("/movie/now_playing");
 
-export const topRateMovie = () => axiosInstance.get("/movie/top_rate");
+export const topRatedMovie = () => axiosInstance.get("/movie/top_rated");
 
 export const popularMovie = () => axiosInstance.get("/movie/popular");
 

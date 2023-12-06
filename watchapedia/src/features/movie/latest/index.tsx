@@ -1,19 +1,13 @@
 import React from "react";
-import styled from "@emotion/styled/macro";
 import useLatestMovie from "./useLatestMovie";
-import Card from "../../../components/Card";
+import Card, { CardContainer } from "../../../components/Card";
 import { getCardYear } from "../../../utils/StringAndNumberUtils";
-
-const Title = styled.h4``;
-
-const Base = styled.div``;
 
 const LatestMovieSection: React.FC = () => {
   const { data: response, isLoading } = useLatestMovie();
 
   return (
-    <Base>
-      <Title>최근 개봉작</Title>
+    <CardContainer title="최근 개봉작">
       {isLoading ? (
         <div>Loading...</div>
       ) : (
@@ -27,7 +21,7 @@ const LatestMovieSection: React.FC = () => {
           />
         )
       )}
-    </Base>
+    </CardContainer>
   );
 };
 

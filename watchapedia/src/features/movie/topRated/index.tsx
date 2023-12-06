@@ -1,14 +1,14 @@
 import React from "react";
-import useNowPlayingMovie from "./useNowPlayingMovie";
+import useTopRatedMovie from "./useTopRatedMovie";
 import Card, { CardContainer } from "../../../components/Card";
 import CardSlider from "../../../components/CardSlider";
 import { getCardYear } from "../../../utils/StringAndNumberUtils";
 
-const NowPlayingMovieSection: React.FC = () => {
-  const { data: response, isLoading } = useNowPlayingMovie();
+const TopRatedMovieSection: React.FC = () => {
+  const { data: response, isLoading } = useTopRatedMovie();
 
   return (
-    <CardContainer title="현재 상영중">
+    <CardContainer title="높은 평점">
       {isLoading ? (
         <div>Loading...</div>
       ) : (
@@ -29,4 +29,4 @@ const NowPlayingMovieSection: React.FC = () => {
   );
 };
 
-export default NowPlayingMovieSection;
+export default TopRatedMovieSection;

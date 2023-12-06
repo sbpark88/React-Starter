@@ -1,14 +1,14 @@
 import React from "react";
-import useNowPlayingMovie from "./useNowPlayingMovie";
+import usePopularMovie from "./usePopularMovie";
 import Card, { CardContainer } from "../../../components/Card";
 import CardSlider from "../../../components/CardSlider";
 import { getCardYear } from "../../../utils/StringAndNumberUtils";
 
-const NowPlayingMovieSection: React.FC = () => {
-  const { data: response, isLoading } = useNowPlayingMovie();
+const PopularMovieSection: React.FC = () => {
+  const { data: response, isLoading } = usePopularMovie();
 
   return (
-    <CardContainer title="현재 상영중">
+    <CardContainer title="인기 상영작">
       {isLoading ? (
         <div>Loading...</div>
       ) : (
@@ -29,4 +29,4 @@ const NowPlayingMovieSection: React.FC = () => {
   );
 };
 
-export default NowPlayingMovieSection;
+export default PopularMovieSection;

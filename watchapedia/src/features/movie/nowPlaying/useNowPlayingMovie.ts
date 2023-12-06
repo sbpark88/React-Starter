@@ -5,7 +5,7 @@ import { ListResponse, MovieDetail } from "../../../types";
 
 const useNowPlayingMovie = () =>
   useQuery<AxiosResponse<ListResponse<MovieDetail>>, AxiosError>(
-    "nowPlayingMovie",
+    "playingMovie",
     nowPlayingMovie,
   );
 

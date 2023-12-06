@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { COLORS } from "../constants/COLORS";
 import { FONT_SIZE, FONT_WEIGHT } from "../constants/FONTS";
 import { AiFillStar } from "react-icons/ai";
-import { getMovieRate } from "../utils/StringAndNumberUtils";
+import { getCardYear, getMovieRate } from "../utils/StringAndNumberUtils";
 
 const Title = styled.h4`
   color: ${COLORS.BLACK_5};
@@ -88,14 +88,20 @@ const Card: React.FC<Props> = ({
         </ImageWrapper>
         <Info>
           <Title>{title}</Title>
-          <Keyword>{year}</Keyword>
+          <Keyword>{getCardYear(year)}</Keyword>
           <Average>
-            <span>평균</span>
-            <span>
-              {" "}
-              <AiFillStar style={{ transform: "translateY(2px)" }} />
-            </span>
-            <span>{getMovieRate(voteAverage)}</span>
+            {voteAverage === 0 ? (
+              <span>평가 전</span>
+            ) : (
+              <>
+                <span>평균</span>
+                <span>
+                  {" "}
+                  <AiFillStar style={{ transform: "translateY(2px)" }} />
+                </span>
+                <span>{getMovieRate(voteAverage)}</span>
+              </>
+            )}
           </Average>
         </Info>
       </Base>

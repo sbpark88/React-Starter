@@ -5,9 +5,17 @@ import TvPage from "./pages/TvPage";
 import TvDetail from "./pages/TvDetail";
 import MovieDetail from "./pages/MovieDetail";
 import ErrorPage from "./pages/ErrorPage";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <Header />
+      <RouterProvider router={router} />
+      <Footer />
+    </>
+  );
 }
 
 export default App;

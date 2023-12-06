@@ -5,7 +5,7 @@ import { ListResponse, MovieDetail } from "../../../types";
 
 const useTopRatedMovie = () =>
   useQuery<AxiosResponse<ListResponse<MovieDetail>>, AxiosError>(
-    "useTopRatedMovie",
+    "topRatedMovie",
     topRatedMovie,
   );
 

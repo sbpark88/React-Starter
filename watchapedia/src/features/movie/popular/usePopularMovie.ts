@@ -5,7 +5,7 @@ import { ListResponse, MovieDetail } from "../../../types";
 
 const usePopularMovie = () =>
   useQuery<AxiosResponse<ListResponse<MovieDetail>>, AxiosError>(
-    "usePopularMovie",
+    "popularMovie",
     popularMovie,
   );
 

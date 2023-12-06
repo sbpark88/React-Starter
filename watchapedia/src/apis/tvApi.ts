@@ -6,7 +6,7 @@ export const airingTodayTv = () => axiosInstance.get("/tv/airing_today");
 
 export const onTheAirTv = () => axiosInstance.get("/tv/on_the_air");
 
-export const topRateTv = () => axiosInstance.get("/tv/top_rate");
+export const topRatedTv = () => axiosInstance.get("/tv/top_rated");
 
 export const popularTv = () => axiosInstance.get("/tv/popular");
 

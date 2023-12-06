@@ -5,6 +5,9 @@ import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import { COLORS } from "../constants/COLORS";
 import { css } from "@emotion/react/macro";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 const ArrowButton = styled.button<{ pos?: "left" | "right" }>`
   padding: 16px;
   box-shadow: 0 2px 5px 0 ${COLORS.OPAQUE_BLACK_010};
@@ -63,11 +66,11 @@ type Props = {
   children?: ReactNode | [ReactNode];
 };
 
-const SimpleSlider: React.FC<Props> = ({
+const CardSlider: React.FC<Props> = ({
   settings = DEFAULT_SETTINGS,
   children,
 }) => {
   return <Slider {...settings}>{children}</Slider>;
 };
 
-export default SimpleSlider;
+export default CardSlider;

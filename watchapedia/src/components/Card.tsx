@@ -5,6 +5,7 @@ import { COLORS } from "../constants/COLORS";
 import { FONT_SIZE, FONT_WEIGHT } from "../constants/FONTS";
 import { ImWarning } from "react-icons/im";
 import { AiFillStar } from "react-icons/ai";
+import { getMovieRate } from "../utils/StringAndNumberUtils";
 
 const Title = styled.h4`
   color: ${COLORS.BLACK_5};
@@ -33,6 +34,7 @@ const Average = styled.div`
   margin-top: 5px;
   display: flex;
   align-items: center;
+  line-height: 1.3;
 `;
 
 const Info = styled.div`
@@ -92,9 +94,9 @@ const Card: React.FC<Props> = ({
             <span>평균</span>
             <span>
               {" "}
-              <AiFillStar />
+              <AiFillStar style={{ transform: "translateY(2px)" }} />
             </span>
-            <span>{voteAverage}</span>
+            <span>{getMovieRate(voteAverage)}</span>
           </Average>
         </Info>
       </Base>

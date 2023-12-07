@@ -1,10 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "@emotion/styled/macro";
 import { PAGES } from "../App";
 import { COLORS } from "../constants/COLORS";
 import { FONT_SIZE, FONT_WEIGHT } from "../constants/FONTS";
 import { AiOutlineSearch } from "react-icons/ai";
 import { HEADER_HEIGHT } from "../constants/STYLES";
+import useMovieSearch from "../features/movie/useMovieSearch";
 
 const SignUp = styled.button`
   min-width: 72px;
@@ -45,7 +46,7 @@ const SearchInput = styled.input`
 
 const SearchLabel = styled.label`
   width: 100%;
-  height: 63px;
+  height: 40px;
   background: ${COLORS.WHITE_1};
   display: flex;
   align-items: center;
@@ -61,22 +62,45 @@ const SearchFormWrapper = styled.div`
   width: 100%;
 `;
 
-const TextLogo = styled.h1`
-  font-size: ${FONT_SIZE.LOGO};
-  font-weight: ${FONT_WEIGHT.BOLD};
-  > span[class="primary"] {
-    color: ${COLORS.BRAND_COLOR};
-  }
-  > span:not(.primary) {
-    color: ${COLORS.BLACK_0};
+const SearchResultListItem = styled.li`
+  padding: 4px 6px;
+  box-sizing: border-box;
+  color: ${COLORS.BLACK_0};
+  font-size: ${FONT_SIZE.ITEMS};
+  width: 100%;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    background: ${COLORS.WHITE_2};
   }
 `;
 
-const Link = styled.a``;
+const SearchResultList = styled.ul`
+  padding: 0;
+`;
+
+const SearchResultWrapper = styled.div`
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  background: ${COLORS.WHITE_0};
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 0 2px 5px 0 ${COLORS.OPAQUE_BLACK_010};
+  max-height: 480px;
+  overflow-y: scroll;
+`;
 
 const SearchMenu = styled.li`
   width: 300px;
-  height: 62px;
+  height: ${HEADER_HEIGHT};
   display: flex;
   align-items: center;
   flex-shrink: 1;
@@ -84,6 +108,21 @@ const SearchMenu = styled.li`
   transition: all 0.5s ease 0s;
   position: relative;
 `;
+
+const TextLogo = styled.h1`
+  font-size: ${FONT_SIZE.LOGO};
+  font-weight: ${FONT_WEIGHT.BOLD};
+
+  > span[class="primary"] {
+    color: ${COLORS.BRAND_COLOR};
+  }
+
+  > span:not(.primary) {
+    color: ${COLORS.BLACK_0};
+  }
+`;
+
+const Link = styled.a``;
 
 const MenuButton = styled.button<{ active?: boolean }>`
   font-size: ${FONT_SIZE.DEFAULT};
@@ -98,6 +137,7 @@ const Menu = styled.li`
   align-items: center;
   height: 62px;
   flex-shrink: 0;
+
   &:not(:first-child) {
     margin-left: 24px;
   }
@@ -113,7 +153,8 @@ const MenuList = styled.ul`
 const MenuListWrapper = styled.div``;
 
 const Navigation = styled.nav`
-  margin: 0 30px;
+  margin: 0 auto;
+  padding: 0 30px;
   max-width: 1200px;
 `;
 
@@ -127,15 +168,20 @@ const Base = styled.header`
   background-color: ${COLORS.WHITE_0};
   box-shadow: ${COLORS.OPAQUE_BLACK_008} 0 1px 0 0;
   text-align: center;
-  z-index: 10;
   transition: background-color 200ms ease 0s;
 `;
 
 const Header: React.FC = () => {
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
+
   const onSearchInputChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {},
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchKeyword(event.target.value);
+    },
     [],
   );
+
+  const { data: searchResult } = useMovieSearch(searchKeyword);
 
   return (
     <Base>
@@ -170,6 +216,15 @@ const Header: React.FC = () => {
                   </SearchLabel>
                 </SearchForm>
               </SearchFormWrapper>
+              <SearchResultWrapper>
+                <SearchResultList>
+                  {searchResult?.results.map((movie) => (
+                    <Link key={movie.id} href={`/movie/${movie.id}`}>
+                      <SearchResultListItem>{movie.title}</SearchResultListItem>
+                    </Link>
+                  ))}
+                </SearchResultList>
+              </SearchResultWrapper>
             </SearchMenu>
             <Menu>
               <SignIn>로그인</SignIn>

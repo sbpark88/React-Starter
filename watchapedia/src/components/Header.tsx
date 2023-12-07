@@ -147,7 +147,6 @@ const MenuList = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
-  overflow: hidden;
 `;
 
 const MenuListWrapper = styled.div``;

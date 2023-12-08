@@ -8,13 +8,17 @@ import styled from "@emotion/styled/macro";
 import { HEADER_HEIGHT } from "../constants/STYLES";
 
 export const SectionContainer = styled.div`
-  margin-top: ${HEADER_HEIGHT};
   padding: 0 20px;
 `;
 
-export const Main = styled.main`
+export const ContainerWithHeader = styled.main`
+  margin-top: ${HEADER_HEIGHT};
+`;
+
+export const Main = styled(ContainerWithHeader)`
   max-width: 1200px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const MainPage: React.FC = () => {

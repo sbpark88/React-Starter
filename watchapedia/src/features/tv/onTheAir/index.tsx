@@ -18,7 +18,7 @@ const OnTheAirTvSection: React.FC = () => {
               linkUrl={`/tv/${tvDetail.id}`}
               title={tvDetail.name}
               year={tvDetail.first_air_date}
-              posterPath={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/${tvDetail.poster_path}`}
+              posterPath={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/w300/${tvDetail.poster_path}`}
               voteAverage={tvDetail.vote_average}
             />
           ))}

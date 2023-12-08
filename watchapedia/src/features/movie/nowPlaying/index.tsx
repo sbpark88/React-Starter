@@ -18,7 +18,7 @@ const NowPlayingMovieSection: React.FC = () => {
               linkUrl={`/movie/${movieDetail.id}`}
               title={movieDetail.title}
               year={movieDetail.release_date}
-              posterPath={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/${movieDetail.poster_path}`}
+              posterPath={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/w300/${movieDetail.poster_path}`}
               voteAverage={movieDetail.vote_average}
             />
           ))}

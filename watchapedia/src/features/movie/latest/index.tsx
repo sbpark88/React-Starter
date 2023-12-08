@@ -15,7 +15,7 @@ const LatestMovieSection: React.FC = () => {
             linkUrl={`/movie/${response.data.id}`}
             title={response.data.title}
             year={response.data.release_date}
-            posterPath={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/${response.data.poster_path}`}
+            posterPath={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/w300/${response.data.poster_path}`}
             voteAverage={response.data.vote_average}
           />
         )

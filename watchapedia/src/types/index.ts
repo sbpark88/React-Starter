@@ -5,7 +5,7 @@ interface Collection {
   poster_path: string;
 }
 
-interface Genre {
+export interface Genre {
   id: number;
   name: string;
 }
@@ -141,3 +141,15 @@ export interface ListResponse<T> {
   total_pages: number;
   total_results: number;
 }
+
+export type UseQueryResponse<T> = {
+  isLoading: boolean;
+  isError: boolean;
+  data?: T;
+};
+
+export type UseQueryListResponse<T> = {
+  isLoading: boolean;
+  isError: boolean;
+  data?: ListResponse<T>;
+};

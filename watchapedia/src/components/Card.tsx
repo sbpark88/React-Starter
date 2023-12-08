@@ -3,8 +3,8 @@ import styled from "@emotion/styled/macro";
 import { Link } from "react-router-dom";
 import { COLORS } from "../constants/COLORS";
 import { FONT_SIZE, FONT_WEIGHT } from "../constants/FONTS";
-import { AiFillStar } from "react-icons/ai";
 import { getCardYear, getMovieRate } from "../utils/StringAndNumberUtils";
+import { RatingStar } from "./Images";
 
 const Title = styled.h4`
   color: ${COLORS.BLACK_5};
@@ -87,7 +87,7 @@ const Card: React.FC<Props> = ({
                 <span>평균</span>
                 <span>
                   {" "}
-                  <AiFillStar style={{ transform: "translateY(2px)" }} />
+                  <RatingStar />
                 </span>
                 <span>{getMovieRate(voteAverage)}</span>
               </>
@@ -153,6 +153,7 @@ const Poster: React.FC<{ posterPath: string; title: string }> = ({
 const isAvailablePoster = (posterPath: string): boolean =>
   posterPath.split("/").pop() !== "null";
 
+// 카드를 타이틀을 갖는 컨테이너에 담아 보여줄 때 사용한다.
 export const CardContainer: React.FC<{
   title: string;
   children: ReactNode;

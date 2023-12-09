@@ -1,12 +1,19 @@
 import { latestMovie } from "../../../apis/movieAPi";
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
-import { MovieDetail } from "../../../types";
+import { MovieDetail, UseQueryResponse } from "../../../types";
 
-const useLatestMovie = (): UseQueryResult<
-  AxiosResponse<MovieDetail>,
-  AxiosError
-> =>
-  useQuery<AxiosResponse<MovieDetail>, AxiosError>("latestMovie", latestMovie);
+const useLatestMovie = (): UseQueryResponse<MovieDetail> => {
+  const { isLoading, isError, data } = useQuery<
+    AxiosResponse<MovieDetail>,
+    AxiosError
+  >("latestMovie", latestMovie);
+
+  return {
+    isLoading,
+    isError,
+    data: data?.data,
+  };
+};
 
 export default useLatestMovie;

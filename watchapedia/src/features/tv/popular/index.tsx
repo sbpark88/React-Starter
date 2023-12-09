@@ -12,7 +12,7 @@ const PopularTvSection: React.FC = () => {
         <div>Loading...</div>
       ) : (
         <CardSlider>
-          {response?.data.results.map((tvDetail) => (
+          {response?.results.map((tvDetail) => (
             <Card
               key={tvDetail.id}
               linkUrl={`/tv/${tvDetail.id}`}

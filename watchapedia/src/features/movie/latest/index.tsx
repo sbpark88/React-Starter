@@ -10,13 +10,13 @@ const LatestMovieSection: React.FC = () => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        response?.data && (
+        response && (
           <Card
-            linkUrl={`/movie/${response.data.id}`}
-            title={response.data.title}
-            year={response.data.release_date}
-            posterPath={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/w300/${response.data.poster_path}`}
-            voteAverage={response.data.vote_average}
+            linkUrl={`/movie/${response.id}`}
+            title={response.title}
+            year={response.release_date}
+            posterPath={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/w300/${response.poster_path}`}
+            voteAverage={response.vote_average}
           />
         )
       )}

@@ -234,79 +234,82 @@ const MovieDetail: React.FC = () => {
 
   return (
     <Base>
-      {isLoading || !data ? (
+      {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <>
-          <TopInfo>
-            <PosterContainer>
-              <Backdrop>
-                <LeftBlur />
-                <BackdropImage
-                  imageUrl={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/original/${data.backdrop_path}`}
-                >
-                  <LeftGradient />
-                  <RightGradient />
-                </BackdropImage>
-                <RightBlur />
-              </Backdrop>
-            </PosterContainer>
+        data && (
+          <>
+            <TopInfo>
+              <PosterContainer>
+                <Backdrop>
+                  <LeftBlur />
+                  <BackdropImage
+                    imageUrl={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/original/${data.backdrop_path}`}
+                  >
+                    <LeftGradient />
+                    <RightGradient />
+                  </BackdropImage>
+                  <RightBlur />
+                </Backdrop>
+              </PosterContainer>
 
-            <Main>
-              <Container>
-                <PosterWrapper>
-                  <Poster
-                    src={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/w300/${data.poster_path}`}
-                  />
-                </PosterWrapper>
+              <Main>
+                <Container>
+                  <PosterWrapper>
+                    <Poster
+                      src={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/w300/${data.poster_path}`}
+                    />
+                  </PosterWrapper>
 
-                <ContentWrapper>
-                  <Title>{data.title}</Title>
-                  <Keyword>
-                    {getCardYear(data.release_date)} ﹒ {getGenre(data.genres)}
-                  </Keyword>
-                  <AverageRate>
-                    평균 <RatingStar /> {getMovieRate(data.vote_average)}(
-                    {data.vote_count} 명)
-                  </AverageRate>
-                  <Action>
-                    <StarRate>
-                      <StarRateText>평가하기</StarRateText>
-                      <RatingWrapper>
-                        <Rating precision={0.5} />
-                      </RatingWrapper>
-                    </StarRate>
+                  <ContentWrapper>
+                    <Title>{data.title}</Title>
+                    <Keyword>
+                      {getCardYear(data.release_date)} ﹒{" "}
+                      {getGenre(data.genres)}
+                    </Keyword>
+                    <AverageRate>
+                      평균 <RatingStar /> {getMovieRate(data.vote_average)}(
+                      {data.vote_count} 명)
+                    </AverageRate>
+                    <Action>
+                      <StarRate>
+                        <StarRateText>평가하기</StarRateText>
+                        <RatingWrapper>
+                          <Rating precision={0.5} />
+                        </RatingWrapper>
+                      </StarRate>
 
-                    <Divider />
+                      <Divider />
 
-                    <ActionButtonContainer>
-                      <ActionButton>
-                        <AiOutlinePlus />
-                        보고싶어요
-                      </ActionButton>
-                      <ActionButton>
-                        <FaPen />
-                        코멘트
-                      </ActionButton>
-                      <ActionButton>
-                        <AiFillEye />
-                        보는중
-                      </ActionButton>
-                      <ActionButton>
-                        <FiMoreHorizontal />
-                        더보기
-                      </ActionButton>
-                    </ActionButtonContainer>
-                  </Action>
-                </ContentWrapper>
-              </Container>
-            </Main>
-          </TopInfo>
+                      <ActionButtonContainer>
+                        <ActionButton>
+                          <AiOutlinePlus />
+                          보고싶어요
+                        </ActionButton>
+                        <ActionButton>
+                          <FaPen />
+                          코멘트
+                        </ActionButton>
+                        <ActionButton>
+                          <AiFillEye />
+                          보는중
+                        </ActionButton>
+                        <ActionButton>
+                          <FiMoreHorizontal />
+                          더보기
+                        </ActionButton>
+                      </ActionButtonContainer>
+                    </Action>
+                  </ContentWrapper>
+                </Container>
+              </Main>
+            </TopInfo>
 
-          <BottomInfo>
-            <ContentSectionContainer></ContentSectionContainer>
-          </BottomInfo>
-        </>
+            <BottomInfo>
+              <ContentSectionContainer></ContentSectionContainer>
+            </BottomInfo>
+          </>
+        )
       )}
     </Base>
   );

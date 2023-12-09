@@ -1,9 +1,19 @@
 import { latestTv } from "../../../apis/tvApi";
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
-import { TVDetail } from "../../../types";
+import { TVDetail, UseQueryResponse } from "../../../types";
 
-const useLatestTv = (): UseQueryResult<AxiosResponse<TVDetail>, AxiosError> =>
-  useQuery<AxiosResponse<TVDetail>, AxiosError>("latestTv", latestTv);
+const useLatestTv = (): UseQueryResponse<TVDetail> => {
+  const { isLoading, isError, data } = useQuery<
+    AxiosResponse<TVDetail>,
+    AxiosError
+  >("latestTv", latestTv);
+
+  return {
+    isLoading,
+    isError,
+    data: data?.data,
+  };
+};
 
 export default useLatestTv;

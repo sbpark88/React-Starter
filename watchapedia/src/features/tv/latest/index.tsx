@@ -10,13 +10,13 @@ const LatestTvSection: React.FC = () => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        response?.data && (
+        response && (
           <Card
-            linkUrl={`/tv/${response.data.id}`}
-            title={response.data.name}
-            year={response.data.first_air_date}
-            posterPath={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/w300/${response.data.poster_path}`}
-            voteAverage={response.data.vote_average}
+            linkUrl={`/tv/${response.id}`}
+            title={response.name}
+            year={response.first_air_date}
+            posterPath={`${process.env.REACT_APP_TMDB_IMAGE_PREFIX}/w300/${response.poster_path}`}
+            voteAverage={response.vote_average}
           />
         )
       )}

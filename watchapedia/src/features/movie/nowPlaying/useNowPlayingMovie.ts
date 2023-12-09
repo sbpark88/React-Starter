@@ -1,15 +1,23 @@
 import { nowPlayingMovie } from "../../../apis/movieAPi";
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
-import { ListResponse, MovieDetail } from "../../../types";
+import {
+  ListResponse,
+  MovieDetail,
+  UseQueryListResponse,
+} from "../../../types";
 
-const useNowPlayingMovie = (): UseQueryResult<
-  AxiosResponse<ListResponse<MovieDetail>>,
-  AxiosError
-> =>
-  useQuery<AxiosResponse<ListResponse<MovieDetail>>, AxiosError>(
-    "playingMovie",
-    nowPlayingMovie,
-  );
+const useNowPlayingMovie = (): UseQueryListResponse<MovieDetail> => {
+  const { isLoading, isError, data } = useQuery<
+    AxiosResponse<ListResponse<MovieDetail>>,
+    AxiosError
+  >("playingMovie", nowPlayingMovie);
+
+  return {
+    isLoading,
+    isError,
+    data: data?.data,
+  };
+};
 
 export default useNowPlayingMovie;

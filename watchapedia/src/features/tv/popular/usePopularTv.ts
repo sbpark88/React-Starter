@@ -1,15 +1,19 @@
 import { popularTv } from "../../../apis/tvApi";
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
-import { ListResponse, TVDetail } from "../../../types";
+import { ListResponse, TVDetail, UseQueryListResponse } from "../../../types";
 
-const usePopularTv = (): UseQueryResult<
-  AxiosResponse<ListResponse<TVDetail>>,
-  AxiosError
-> =>
-  useQuery<AxiosResponse<ListResponse<TVDetail>>, AxiosError>(
-    "popularTv",
-    popularTv,
-  );
+const usePopularTv = (): UseQueryListResponse<TVDetail> => {
+  const { isLoading, isError, data } = useQuery<
+    AxiosResponse<ListResponse<TVDetail>>,
+    AxiosError
+  >("popularTv", popularTv);
+
+  return {
+    isLoading,
+    isError,
+    data: data?.data,
+  };
+};
 
 export default usePopularTv;

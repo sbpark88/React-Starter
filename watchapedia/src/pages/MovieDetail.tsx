@@ -15,6 +15,9 @@ import { AiFillEye, AiOutlinePlus } from "react-icons/ai";
 import { FaPen } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { Rating } from "@mui/material";
+import DefaultInfo from "../features/movie/detail/DefaultInfo";
+import { yellow } from "@mui/material/colors";
+import Similar from "../features/movie/detail/Similar";
 
 // Top > 포스터 영역
 const GRADIENT_WIDTH = "150px";
@@ -214,7 +217,7 @@ const ContentSectionContainer = styled.div`
 
 const BottomInfo = styled.div`
   padding: 28px 0 48px;
-  max-width: 960px;
+  max-width: calc(70vw - ${GRADIENT_WIDTH} * 2);
   margin: 0 auto;
 `;
 
@@ -306,7 +309,16 @@ const MovieDetail: React.FC = () => {
             </TopInfo>
 
             <BottomInfo>
-              <ContentSectionContainer></ContentSectionContainer>
+              <ContentSectionContainer>
+                <DefaultInfo
+                  title={data.title}
+                  year={getCardYear(data.release_date)}
+                  genres={getGenre(data.genres)}
+                  runtime={data.runtime}
+                  overview={data.overview}
+                />
+                <Similar movieId={movieId!} />
+              </ContentSectionContainer>
             </BottomInfo>
           </>
         )

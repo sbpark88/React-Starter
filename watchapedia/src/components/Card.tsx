@@ -84,12 +84,9 @@ const Card: React.FC<Props> = ({
               <span>평가 전</span>
             ) : (
               <>
-                <span>평균</span>
                 <span>
-                  {" "}
-                  <RatingStar />
+                  평균 <RatingStar /> {getMovieRate(voteAverage)}
                 </span>
-                <span>{getMovieRate(voteAverage)}</span>
               </>
             )}
           </Average>

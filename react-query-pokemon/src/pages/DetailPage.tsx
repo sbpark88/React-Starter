@@ -4,7 +4,6 @@ import Tabs, { TBA_TYPE } from "../components/tabs/Tabs";
 import useSpeciesQuery, {
   UseSpeciesQueryResponse,
 } from "../hooks/useSpeciesQuery";
-import { SpeciesResponse } from "../types";
 import PokemonInfo from "../components/PokemonInfo";
 import usePokemonQuery, {
   UsePokemonQueryResponse,

@@ -128,7 +128,7 @@ const Card: React.FC<CardProps> = ({
   voteAverage,
 }) => {
   return (
-    <CardLink href={`/movie/${movieId}`} target="_blank">
+    <CardLink href={`/movie/${movieId}`}>
       <CardContainer>
         <CardPosterWrapper>
           <CardPoster

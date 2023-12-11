@@ -1,11 +1,14 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useRef, useState } from "react";
 import styled from "@emotion/styled/macro";
 import { PAGES } from "../App";
 import { COLORS } from "../constants/COLORS";
 import { FONT_SIZE, FONT_WEIGHT } from "../constants/FONTS";
+import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { HEADER_HEIGHT } from "../constants/STYLES";
 import useMovieSearch from "../features/movie/useMovieSearch";
+import useTvSearch from "../features/tv/useTvSearch";
+import useClickAway from "../hooks/useClickAway";
 
 const SignUp = styled.button`
   min-width: 72px;
@@ -89,7 +92,6 @@ const SearchResultWrapper = styled.div`
   top: 48px;
   left: 0;
   width: 100%;
-  z-index: 99;
   background: ${COLORS.WHITE_0};
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -121,8 +123,6 @@ const TextLogo = styled.h1`
     color: ${COLORS.BLACK_0};
   }
 `;
-
-const Link = styled.a``;
 
 const MenuButton = styled.button<{ active?: boolean }>`
   font-size: ${FONT_SIZE.DEFAULT};
@@ -159,6 +159,7 @@ const Navigation = styled.nav`
 
 const Base = styled.header`
   position: fixed;
+  z-index: 99;
   top: 0;
   left: 0;
   width: 100%;
@@ -171,16 +172,36 @@ const Base = styled.header`
 `;
 
 const Header: React.FC = () => {
+  const searchMenuRef = useRef(null);
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
+
+  useClickAway(searchMenuRef, (event) => {
+    event.stopPropagation();
+    if (isSearchOpen) {
+      setIsSearchOpen(false);
+    }
+  });
 
   const onSearchInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
+      event.stopPropagation();
       setSearchKeyword(event.target.value);
+      setIsSearchOpen(true);
+    },
+    [],
+  );
+  const onSearchResultListClick = useCallback(
+    (event: React.MouseEvent<HTMLUListElement>) => {
+      event.stopPropagation();
+      setSearchKeyword("");
+      setIsSearchOpen(false);
     },
     [],
   );
 
-  const { data: searchResult } = useMovieSearch(searchKeyword);
+  const { data: movieSearchResult } = useMovieSearch(searchKeyword);
+  const { data: tvSearchResult } = useTvSearch(searchKeyword);
 
   return (
     <Base>
@@ -188,7 +209,7 @@ const Header: React.FC = () => {
         <MenuListWrapper>
           <MenuList>
             <Menu>
-              <Link href={PAGES.index}>
+              <Link to={PAGES.index}>
                 <TextLogo>
                   <span className="primary">WATCHA</span>
                   <span>PEDIA</span>
@@ -196,19 +217,20 @@ const Header: React.FC = () => {
               </Link>
             </Menu>
             <Menu>
-              <Link href={PAGES.index}>
+              <Link to={PAGES.index}>
                 <MenuButton>영화</MenuButton>
               </Link>
-              <Link href={PAGES.tv}>
+              <Link to={PAGES.tv}>
                 <MenuButton>TV 프로그램</MenuButton>
               </Link>
             </Menu>
-            <SearchMenu>
+            <SearchMenu ref={searchMenuRef}>
               <SearchFormWrapper>
                 <SearchForm>
                   <SearchLabel>
                     <AiOutlineSearch />
                     <SearchInput
+                      value={searchKeyword}
                       placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요."
                       onChange={onSearchInputChange}
                     />
@@ -216,12 +238,21 @@ const Header: React.FC = () => {
                 </SearchForm>
               </SearchFormWrapper>
               <SearchResultWrapper>
-                <SearchResultList>
-                  {searchResult?.results.map((movie) => (
-                    <Link key={movie.id} href={`/movie/${movie.id}`}>
-                      <SearchResultListItem>{movie.title}</SearchResultListItem>
-                    </Link>
-                  ))}
+                <SearchResultList onClick={onSearchResultListClick}>
+                  {isSearchOpen &&
+                    movieSearchResult?.results.map((movie) => (
+                      <Link key={movie.id} to={`/movie/${movie.id}`}>
+                        <SearchResultListItem>
+                          {movie.title}
+                        </SearchResultListItem>
+                      </Link>
+                    ))}
+                  {isSearchOpen &&
+                    tvSearchResult?.results.map((tv) => (
+                      <Link key={tv.id} to={`/tv/${tv.id}`}>
+                        <SearchResultListItem>{tv.name}</SearchResultListItem>
+                      </Link>
+                    ))}
                 </SearchResultList>
               </SearchResultWrapper>
             </SearchMenu>

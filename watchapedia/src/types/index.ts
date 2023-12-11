@@ -58,7 +58,7 @@ export interface MovieDetail extends Movie {
   tagline: string;
 }
 
-interface TV {
+export interface TV {
   id: number;
   name: string;
   original_name: string;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "@emotion/styled/macro";
 import COLORS from "../../constants/Colors";
 import { OptionalTodo, selectedTodoState, Todo, todoListState } from "./atom";

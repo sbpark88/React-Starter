@@ -2,7 +2,7 @@ import React from "react";
 import { ComponentPreview, Previews } from "@react-buddy/ide-toolbox";
 import { PaletteTree } from "./palette";
 import App from "../App";
-import MovieDetail from "../pages/MovieDetail";
+import MovieDetail from "../pages/movie/MovieDetail";
 import Header from "../components/Header";
 
 const ComponentPreviews = () => {

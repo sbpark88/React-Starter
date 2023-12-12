@@ -40,7 +40,7 @@ type Props = {
   title: string;
   year: string;
   genres: string;
-  runtime: number;
+  runtime?: number;
   overview: string;
 };
 
@@ -51,8 +51,8 @@ const DefaultInfo: React.FC<Props> = ({
   runtime,
   overview,
 }) => {
-  const hour = Math.ceil(runtime / 60);
-  const minute = runtime % 60;
+  const hour = runtime && Math.ceil(runtime / 60);
+  const minute = runtime && runtime % 60;
 
   return (
     <ContentSection>
@@ -68,7 +68,7 @@ const DefaultInfo: React.FC<Props> = ({
           <br />
           {year} · {genres}
           <br />
-          {hour}시간 {minute}분
+          {runtime && `${hour}시간 ${minute}분`}
           <br />
           <br />
           {overview}

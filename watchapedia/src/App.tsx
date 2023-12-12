@@ -1,9 +1,9 @@
 import React from "react";
-import MainPage from "./pages/MainPage";
-import TvPage from "./pages/TvPage";
-import TvDetail from "./pages/TvDetail";
-import MovieDetail from "./pages/MovieDetail";
-import ErrorPage from "./pages/ErrorPage";
+import MoviePage from "./pages/movie/MoviePage";
+import TvPage from "./pages/tv/TvPage";
+import TvDetail from "./pages/tv/TvDetail";
+import MovieDetail from "./pages/movie/MovieDetail";
+import ErrorPage from "./pages/common/ErrorPage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -20,7 +20,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route index element={<MainPage />} errorElement={<ErrorPage />} />
+        <Route index element={<MoviePage />} errorElement={<ErrorPage />} />
         <Route
           path={PAGES.tv}
           element={<TvPage />}

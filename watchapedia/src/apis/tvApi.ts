@@ -10,8 +10,7 @@ export const topRatedTv = () => axiosInstance.get("/tv/top_rated");
 
 export const popularTv = () => axiosInstance.get("/tv/popular");
 
-export const detailTv = () => (tvId: string) =>
-  axiosInstance.get(`/tv/${tvId}`);
+export const detailTv = (tvId: string) => axiosInstance.get(`/tv/${tvId}`);
 
 export const similarTv = (tvId: string) =>
   axiosInstance.get(`/tv/${tvId}/similar`);

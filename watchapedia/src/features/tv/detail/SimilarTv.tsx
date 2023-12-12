@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled/macro";
-import useSimilarMovie from "./useSimilarMovie";
+import useSimilarTv from "./useSimilarTv";
 import { getMovieRate } from "../../../utils/StringAndNumberUtils";
 import { RatingStar } from "../../../components/Images";
 import { COLORS } from "../../../constants/COLORS";
@@ -35,10 +35,10 @@ const SimilarContentsWrapper = styled.div`
 `;
 
 type Props = {
-  movieId: string;
+  tvId: string;
 };
-const Similar: React.FC<Props> = ({ movieId }) => {
-  const { isLoading, data } = useSimilarMovie(movieId);
+const SimilarTv: React.FC<Props> = ({ tvId }) => {
+  const { isLoading, data } = useSimilarTv(tvId);
 
   return (
     <SimilarSection>
@@ -51,13 +51,13 @@ const Similar: React.FC<Props> = ({ movieId }) => {
         {isLoading ? (
           <div>Loading...</div>
         ) : (
-          data?.results.map((movieDetail) => (
+          data?.results.map((tvDetail) => (
             <Card
-              key={movieDetail.id}
-              movieId={movieDetail.id}
-              posterPath={movieDetail.poster_path}
-              title={movieDetail.title}
-              voteAverage={movieDetail.vote_average}
+              key={tvDetail.id}
+              tvId={tvDetail.id}
+              posterPath={tvDetail.poster_path}
+              title={tvDetail.name}
+              voteAverage={tvDetail.vote_average}
             />
           ))
         )}
@@ -66,7 +66,7 @@ const Similar: React.FC<Props> = ({ movieId }) => {
   );
 };
 
-export default Similar;
+export default SimilarTv;
 
 const CardLink = styled.a``;
 
@@ -115,20 +115,20 @@ const CardVoteAverage = styled.div`
 `;
 
 type CardProps = {
-  movieId: number;
+  tvId: number;
   posterPath: string;
   title: string;
   voteAverage: number;
 };
 
 const Card: React.FC<CardProps> = ({
-  movieId,
+  tvId,
   posterPath,
   title,
   voteAverage,
 }) => {
   return (
-    <CardLink href={`/movie/${movieId}`}>
+    <CardLink href={`/tv/${tvId}`}>
       <CardContainer>
         <CardPosterWrapper>
           <CardPoster

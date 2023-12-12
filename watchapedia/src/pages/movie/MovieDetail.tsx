@@ -1,23 +1,22 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "@emotion/styled/macro";
-import { COLORS } from "../constants/COLORS";
-import { ContainerWithHeader } from "./MainPage";
-import { FONT_SIZE, FONT_WEIGHT } from "../constants/FONTS";
-import useMovieDetail from "../features/movie/useMovieDetail";
+import { COLORS } from "../../constants/COLORS";
+import { ContainerWithHeader } from "../common/MainPage";
+import { FONT_SIZE, FONT_WEIGHT } from "../../constants/FONTS";
+import useMovieDetail from "../../features/movie/useMovieDetail";
 import {
   getCardYear,
   getGenre,
   getMovieRate,
-} from "../utils/StringAndNumberUtils";
-import { RatingStar } from "../components/Images";
+} from "../../utils/StringAndNumberUtils";
+import { RatingStar } from "../../components/Images";
 import { AiFillEye, AiOutlinePlus } from "react-icons/ai";
 import { FaPen } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { Rating } from "@mui/material";
-import DefaultInfo from "../features/movie/detail/DefaultInfo";
-import { yellow } from "@mui/material/colors";
-import Similar from "../features/movie/detail/Similar";
+import DefaultInfo from "../../features/common/detail/DefaultInfo";
+import SimilarMovie from "../../features/movie/detail/SimilarMovie";
 
 // Top > 포스터 영역
 const GRADIENT_WIDTH = "150px";
@@ -317,7 +316,7 @@ const MovieDetail: React.FC = () => {
                   runtime={data.runtime}
                   overview={data.overview}
                 />
-                <Similar movieId={movieId!} />
+                <SimilarMovie movieId={movieId!} />
               </ContentSectionContainer>
             </BottomInfo>
           </>

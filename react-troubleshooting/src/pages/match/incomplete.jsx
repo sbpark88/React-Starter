@@ -11,6 +11,9 @@ class MatchPage extends Component {
       currentCard: createMockCard(),
       matches: [],
     };
+
+    this.next = this.next.bind(this)
+    this.like = this.like.bind(this)
   }
 
   next() {
@@ -40,7 +43,7 @@ class MatchPage extends Component {
     return (
       <main style={commonStyles.flexCenter}>
         <section style={pageStyles.pageWrap}>
-          <img src='logo.png' alt='logo' style={pageStyles.logo} />
+          <img src='/logo.png' alt='logo' style={pageStyles.logo} />
           <MatchCard style={commonStyles.flex1} card={currentCard} />
           <MatchController {...matchControllerProps} />
           <MatchList matches={matches}/>

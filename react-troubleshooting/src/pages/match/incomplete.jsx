@@ -1,57 +1,35 @@
-import {Component} from 'react';
+import {useState} from 'react';
 
 import {createMockCard, checkIsMatched} from '../../utils';
 import {commonStyles, pageStyles} from '../../styles';
 
-class MatchPageComponent extends Component {
-  constructor(props) {
-    super(props);
+const MatchPage = () => {
+  const [currentCard, setCurrentCard] = useState(createMockCard())
+  const [matches, setMatches] = useState([])
 
-    this.state = {
-      currentCard: createMockCard(),
-      matches: [],
-    };
+  const next = () => setCurrentCard(createMockCard())
+
+  const like = () => {
+    next();
+
+    checkIsMatched().then(({data: {isMatched}}) => {
+      if (isMatched) {
+        setMatches(prevState => [currentCard, ...prevState])
+      }
+    });
   }
 
-  render() {
-    const {state: {currentCard, matches}} = this;
-
-    const next = () => {
-      this.setState({
-        ...this.state,
-        currentCard: createMockCard(),
-      });
-    }
-
-    const like = () => {
-      next();
-
-      checkIsMatched().then(({data: {isMatched}}) => {
-        if (isMatched) {
-          this.setState({
-            ...this.state,
-            matches: [currentCard, ...this.state.matches],
-          });
-        }
-      });
-    }
-
-    const props = {currentCard, matches, next, like};
-
-    return <MatchPage {...props} />
-  }
+  return (
+      <main style={commonStyles.flexCenter}>
+        <section style={pageStyles.pageWrap}>
+          <img src='/logo.png' alt='logo' style={pageStyles.logo}/>
+          <MatchCard style={commonStyles.flex1} card={currentCard}/>
+          <MatchController next={next} like={like}/>
+          <MatchList matches={matches}/>
+        </section>
+      </main>
+  )
 }
-
-const MatchPage = ({currentCard, matches, next, like}) => (
-    <main style={commonStyles.flexCenter}>
-      <section style={pageStyles.pageWrap}>
-        <img src='/logo.png' alt='logo' style={pageStyles.logo}/>
-        <MatchCard style={commonStyles.flex1} card={currentCard}/>
-        <MatchController next={next} like={like}/>
-        <MatchList matches={matches}/>
-      </section>
-    </main>
-)
 
 const MatchCard = ({card: {name, image, age, company, education}}) => (
     <div style={pageStyles.matchCardRoot}>
@@ -88,4 +66,4 @@ const MatchController = ({next, like}) => (
     </div>
 )
 
-export default MatchPageComponent;
+export default MatchPage;

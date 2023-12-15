@@ -1,9 +1,9 @@
-import { Component } from 'react';
+import {Component} from 'react';
 
-import { createMockCard, checkIsMatched } from '../../utils';
-import { commonStyles, pageStyles } from '../../styles';
+import {createMockCard, checkIsMatched} from '../../utils';
+import {commonStyles, pageStyles} from '../../styles';
 
-class MatchPage extends Component {
+class MatchPageComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -14,7 +14,7 @@ class MatchPage extends Component {
   }
 
   render() {
-    const { state: { currentCard, matches } } = this;
+    const {state: {currentCard, matches}} = this;
 
     const next = () => {
       this.setState({
@@ -26,7 +26,7 @@ class MatchPage extends Component {
     const like = () => {
       next();
 
-      checkIsMatched().then(({ data: { isMatched } }) => {
+      checkIsMatched().then(({data: {isMatched}}) => {
         if (isMatched) {
           this.setState({
             ...this.state,
@@ -36,66 +36,56 @@ class MatchPage extends Component {
       });
     }
 
-    const matchControllerProps = { next, like };
+    const props = {currentCard, matches, next, like};
 
-    return (
-      <main style={commonStyles.flexCenter}>
-        <section style={pageStyles.pageWrap}>
-          <img src='/logo.png' alt='logo' style={pageStyles.logo} />
-          <MatchCard style={commonStyles.flex1} card={currentCard} />
-          <MatchController {...matchControllerProps} />
-          <MatchList matches={matches}/>
-        </section>
-      </main>
-    );
+    return <MatchPage {...props} />
   }
 }
 
-class MatchCard extends Component {
-  render() {
-    const { card: { name, image, age, company, education } } = this.props;
+const MatchPage = ({currentCard, matches, next, like}) => (
+    <main style={commonStyles.flexCenter}>
+      <section style={pageStyles.pageWrap}>
+        <img src='/logo.png' alt='logo' style={pageStyles.logo}/>
+        <MatchCard style={commonStyles.flex1} card={currentCard}/>
+        <MatchController next={next} like={like}/>
+        <MatchList matches={matches}/>
+      </section>
+    </main>
+)
 
-    return (
-      <div style={pageStyles.matchCardRoot}>
-        <div style={pageStyles.matchCardImageWrap}>
-          <img style={pageStyles.matchCardImage} src={image} alt='profile' />
-        </div>
-        <div style={commonStyles.flex}>
-          <div style={commonStyles.flex1}>Name: {name}</div>
-          <div style={commonStyles.flex1}>Age: {age}</div>
-        </div>
-        <div style={commonStyles.flex}>
-          <div style={commonStyles.flex1}>Company: {company}</div>
-          <div style={commonStyles.flex1}>Education: {education}</div>
-        </div>
+const MatchCard = ({card: {name, image, age, company, education}}) => (
+    <div style={pageStyles.matchCardRoot}>
+      <div style={pageStyles.matchCardImageWrap}>
+        <img style={pageStyles.matchCardImage} src={image} alt='profile'/>
       </div>
-    );
-  }
-}
-class MatchList extends Component {
-  render() {
-    const listItems = this.props.matches.map((matchedCard) => (
-      <div key={matchedCard.id}>
-        {matchedCard.name} ({matchedCard.age}) also liked your pictur!
+      <div style={commonStyles.flex}>
+        <div style={commonStyles.flex1}>Name: {name}</div>
+        <div style={commonStyles.flex1}>Age: {age}</div>
       </div>
-    ))
-
-    return (
-      <div style={pageStyles.matchLogRoot}>{listItems}</div>
-    )
-  }
-}
-
-class MatchController extends Component {
-  render() {
-    return (
-      <div style={pageStyles.matchControllerRoot}>
-        <button style={pageStyles.matchButton} onClick={this.props.next}>skip</button>
-        &nbsp;
-        <button style={pageStyles.matchButton} onClick={this.props.like}>Like</button>
+      <div style={commonStyles.flex}>
+        <div style={commonStyles.flex1}>Company: {company}</div>
+        <div style={commonStyles.flex1}>Education: {education}</div>
       </div>
-    );
-  }
-}
+    </div>
+);
 
-export default MatchPage;
+const MatchList = ({matches}) => (
+    <div style={pageStyles.matchLogRoot}>{
+      matches.map((matchedCard) => (
+          <div key={matchedCard.id}>
+            {matchedCard.name} ({matchedCard.age}) also liked your pictur!
+          </div>
+      ))
+    }</div>
+)
+
+
+const MatchController = ({next, like}) => (
+    <div style={pageStyles.matchControllerRoot}>
+      <button style={pageStyles.matchButton} onClick={next}>skip</button>
+      &nbsp;
+      <button style={pageStyles.matchButton} onClick={like}>Like</button>
+    </div>
+)
+
+export default MatchPageComponent;

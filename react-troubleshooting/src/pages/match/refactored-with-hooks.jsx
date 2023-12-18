@@ -6,6 +6,7 @@ import { commonStyles, pageStyles } from '../../styles';
 const useForceUpdate = () => {
   const [, render] = useState(0);
 
+
   return () => render(i => i + 1);
 };
 

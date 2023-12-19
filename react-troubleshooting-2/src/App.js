@@ -1,7 +1,7 @@
 import "ol/ol.css";
 
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { createMockMarker, renderMarker } from "./utils";
 import { transform } from "ol/proj";
 import { OlContext } from "./components/common/OlContextProvider";
@@ -56,6 +56,24 @@ const CommentOverlay = () => {
   );
 };
 
+const Marker = ({ marker }) => {
+  const { vectorSource } = useContext(OlContext);
+  const { markerScale, textScale } = useSelector(
+    (state) => ({
+      markerScale: state.mapConfig.markerScale,
+      textScale: state.mapConfig.markerTextScale,
+    }),
+    shallowEqual,
+  );
+
+  useEffect(() => {
+    console.log(`render ${marker.id} marker`);
+    renderMarker(marker, vectorSource, { markerScale, textScale });
+  }, [marker, vectorSource, markerScale, textScale]);
+
+  return null;
+};
+
 const App = () => {
   const dispatch = useDispatch();
 
@@ -75,12 +93,12 @@ const App = () => {
     (state) => ({
       markers: state.markers,
       markerScale: state.mapConfig.markerScale,
-      textScale: state.mapConfig.markerTextScale,
+      textScale: state.mapConfig.textScale,
     }),
     shallowEqual,
   );
 
-  const { map, view, vectorSource } = useContext(OlContext);
+  const { map, view } = useContext(OlContext);
 
   useEffect(() => {
     map.setTarget("map");
@@ -88,9 +106,17 @@ const App = () => {
     view.setZoom(12);
     view.setCenter(transform(SEOUL_CITY_HALL_LONLAT, "EPSG:4326", "EPSG:3857"));
   }, [map, view]);
-  markers.forEach((marker) =>
-    renderMarker(marker, vectorSource, { markerScale, textScale }),
-  );
+
+  // Bad Case
+  // markers.forEach((marker) => {
+  //   console.log(`render ${marker.id} marker`);
+  //   renderMarker(marker, vectorSource, { markerScale, textScale });
+  // });
+
+  // Good Case
+  const markerList = markers.map((marker) => (
+    <Marker key={marker.id} marker={marker} />
+  ));
 
   const handleAddMarker = () => {
     dispatch(addMarker({ marker: createMockMarker() }));
@@ -131,6 +157,7 @@ const App = () => {
         <button onClick={handleAddMarker}>Add Marker</button>
       </div>
       <div id="map" style={styles.MapRoot}></div>
+      {markerList}
       <CommentOverlay />
     </>
   );

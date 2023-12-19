@@ -1,6 +1,6 @@
 import "ol/ol.css";
 
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useEffect, useContext } from "react";
 import { createMockMarker, renderMarker } from "./utils";
 import { transform } from "ol/proj";
@@ -19,7 +19,14 @@ const SEOUL_CITY_HALL_LONLAT = [126.9784147, 37.5666805];
 
 const CommentOverlay = () => {
   const dispatch = useDispatch();
-  const { comments, commentInput } = useSelector((s) => s);
+
+  // Bad Case
+  // const { comments, commentInput } = useSelector((s) => s);
+
+  // Good Case
+  const comments = useSelector((state) => state.comments);
+  const commentInput = useSelector((state) => state.commentInput);
+
   const commentList = comments.map((comment) => (
     <li key={comment.id}>{comment.content}</li>
   ));
@@ -51,10 +58,28 @@ const CommentOverlay = () => {
 
 const App = () => {
   const dispatch = useDispatch();
-  const {
-    markers,
-    mapConfig: { markerScale, markerTextScale: textScale },
-  } = useSelector((s) => s);
+
+  // Bad Case
+  // const {
+  //   markers,
+  //   mapConfig: { markerScale, markerTextScale: textScale },
+  // } = useSelector((s) => s);
+
+  // Good Case 1
+  // const markers = useSelector((state) => state.markers);
+  // const markerScale = useSelector((state) => state.mapConfig.markerScale);
+  // const textScale = useSelector((state) => state.mapConfig.markerTextScale);
+
+  // Good Case 2
+  const { markers, markerScale, textScale } = useSelector(
+    (state) => ({
+      markers: state.markers,
+      markerScale: state.mapConfig.markerScale,
+      textScale: state.mapConfig.markerTextScale,
+    }),
+    shallowEqual,
+  );
+
   const { map, view, vectorSource } = useContext(OlContext);
 
   useEffect(() => {
